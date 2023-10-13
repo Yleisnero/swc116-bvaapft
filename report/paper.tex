@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage{solidity}
+\usepackage{hyperref}
+\title{SWC-116: Block values as a proxy for time}
+\author{Lorenz Kofler and Jonas Fischer}
+\date{13 October 2023}
+\bibliographystyle{plain}
+\begin{document}
+\maketitle
+
+\section{Infos}
+There is neither a lower nor an upper bound on the number of pages. Assume that
+the reader is familiar with Ethereum and Smart Contracts, and just write what
+is necessary. It is a technical report, not an essay, so stick to the facts. As
+a sign of professionalism, proofread the paper and eliminate spelling and
+grammatical errors. You may use chatGPT or a similar tool to polish the paper,
+but take care that it does not introduce nonsense.
+
+Write the paper in English. Typeset it in \LaTeX. The document class
+\verb"article" is fine, but you may use fancier formatting if you prefer. See
+the source of this document for an example.
+
+For Solidity code, add the line  \verb"\usepackage{solidity}" to your preamble
+and wrap the code in a \verb"solidity" environment, like below.
+\begin{solidity}
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+contract HelloWorld {
+    string public greet = "Hello World!";
+}
+\end{solidity}
+
+The citation information for the papers in the TUWEL course is provided
+in the file \verb"seminar.bib". Add any further papers that you want to cite.
+Cite only the papers that you really need.
+Currently, \verb"seminar.bib" contains the following references.
+\nocite{*}
+
+\bibliography{seminar}
+\end{document}
