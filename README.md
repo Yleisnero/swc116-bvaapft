@@ -1,5 +1,26 @@
 # SWC-116 Comedy Hour: Block Values and Their Timey-Wimey Woes
 
+## Installation
+- Install truffle (npm required)
+```
+npm install -g truffle
+```
+You should now have Truffle, Ganache, Solidity, and Web3 installed.
+
+## Usage
+- Compile contracts
+```
+truffle compile
+```
+- Run tests
+```
+truffle test
+```
+- Start development chain and migrate contracts
+```
+truffle develop
+migrate
+```
 
 ## Report
 
