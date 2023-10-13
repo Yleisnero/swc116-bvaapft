@@ -29,7 +29,7 @@
   "sourceMap": "25:354:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:354:1;;;;;;;",
   "deployedSourceMap": "25:354:1:-;;;;;;;;;;;;;;;;;;;;;;;;249:127;;8:9:-1;5:2;;;30:1;27;20:12;5:2;249:127:1;;;;;;;281:16;:14;:16::i;:::-;277:95;;;314:10;;;;;;;;;;277:95;;;352:13;;;;;;;;;;277:95;249:127::o;149:96::-;192:4;230:10;211:15;:29;;204:36;;149:96;:::o",
   "source": "pragma solidity ^0.5.0;\n\ncontract TimedCrowdsale {\n\n  event Finished();\n  event notFinished();\n\n  // Sale should finish exactly at January 1, 2019\n  function isSaleFinished() private returns (bool) {\n    return block.timestamp >= 1546300800;\n  }\n\n  function run() public {\n    if (isSaleFinished()) {\n        emit Finished();\n    } else {\n        emit notFinished();\n    }\n  }\n\n}",
-  "sourcePath": "/home/jonas/Repositories/SC-Seminar/swc116-bvaapft/contracts/timed_crowdsale.sol",
+  "sourcePath": "/home/jonas/Repositories/SC-Seminar/swc116-bvaapft/dev/contracts/timed_crowdsale.sol",
   "ast": {
     "absolutePath": "project:/contracts/timed_crowdsale.sol",
     "exportedSymbols": {
@@ -836,9 +836,17 @@
     "name": "solc",
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x2BE63EfDa29af3E8A9CD151ed4A4063e3241Efe2",
+      "transactionHash": "0x2ac5bc1899d9957873a676059b07ce9beca7fd0710311d0064594f45bef19918"
+    }
+  },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2023-10-13T10:02:22.519Z",
+  "updatedAt": "2023-10-13T10:13:09.691Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },
