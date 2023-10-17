@@ -21,6 +21,10 @@ truffle test
 truffle develop
 migrate
 ```
+- Run script on development chain
+```
+exec scripts/some_script.js
+```
 
 ## Report
 

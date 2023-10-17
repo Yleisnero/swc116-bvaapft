@@ -3,6 +3,7 @@
  */
 
 pragma solidity ^0.5.0;
+import "truffle/console.sol";
 
 contract TimeLock {
     struct User {
@@ -21,12 +22,17 @@ contract TimeLock {
 
     // Withdraw tokens if lock period is over
     function withdraw() public {
+        console.log("Trying to withdraw");
+
         require(users[msg.sender].amount > 0, 'no amount locked');
         require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
 
         uint amount = users[msg.sender].amount;
         users[msg.sender].amount = 0;
         (bool success, ) = msg.sender.call.value(amount)("");
+
+        console.log("Withdraw done");
+
         require(success, 'transfer failed');
     }
 }
