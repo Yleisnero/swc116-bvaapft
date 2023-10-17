@@ -17,7 +17,15 @@ But because Ethereum is decentralized, this information is controlled by miners.
 It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
 
 \section{Examples}
-
+\subsection{Example1 - Game}
+\begin{solidity}
+    function play() public {
+        require(now > 1521763200 && neverPlayed == true);
+        neverPlayed = false;
+        msg.sender.transfer(1500 ether);
+    }
+\end{solidity}
+Source: NCC Group - Time manipulation \cite{DASP2018}
 
 \section{Infos}
 There is neither a lower nor an upper bound on the number of pages. Assume that
