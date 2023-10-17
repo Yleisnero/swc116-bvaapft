@@ -13,3 +13,20 @@ Everyone should upload a paper on Tuwel, even when you work in a group (can be t
 
 For information on how to format the paper, see these notes; the source files of this PDF are in seminar.zip.
 
+# Aim for the seminar
+- For the assigned weakness:
+    - research its various definitions
+    - systematize the definitions, make them precise
+    - describe the code properties checked by tools
+
+- For each definition and code property:
+    - hand-craft tiny sample contracts with and without the weakness,
+    - classify real-world contracts provided by us.
+
+- For each contract with a weakness, give a scripted exploit:
+    - deploy the victim and maybe attackers
+    - execute transactions
+    - specify an assertion that holds if and only if the exploit was successful
+
+- For each contract without the weakness:
+    - argue convincingly, why there is none.
