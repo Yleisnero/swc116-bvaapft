@@ -26,6 +26,20 @@ migrate
 exec scripts/some_script.js
 ```
 
+### Use with Ganache
+- Start Ganache
+```
+npx ganache
+```
+- Migrate contracts
+```
+truffle migrate --network ganache
+```
+- Run script
+```
+truffle exec scripts/exploit_time_lock.js --network ganache
+```
+
 ## Report
 
 Build the report:
