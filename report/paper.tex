@@ -4,7 +4,7 @@
 \title{SWC-116: Block values as a proxy for time}
 \author{Lorenz Kofler and Jonas Fischer}
 \date{13 October 2023}
-\bibliographystyle{plain}
+\bibliographystyle{IEEEtran}
 \begin{document}
 \maketitle
 
@@ -14,7 +14,10 @@ This weakness is described in the Smart Contract Weakness Classification (SWC) r
 The weakness comes from the attempt of developers to introduce time depended functionality in their smart contracts,
 by reading the values block.timestamp or block.number \cite{swc116}. \newline
 But because Ethereum is decentralized, this information is controlled by miners. There is no restriction how the miners have to set the timestamp.
-It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}. 
+It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
+
+\section{Examples}
+
 
 \section{Infos}
 There is neither a lower nor an upper bound on the number of pages. Assume that
