@@ -7,12 +7,18 @@
 \bibliographystyle{IEEEtran}
 \begin{document}
 \maketitle
+\tableofcontents
+\newpage
 
 \section{Introduction}
 This report deals with a weakness in Solidity smart contracts, which is called "block values as a proxy for time".
 This weakness is described in the Smart Contract Weakness Classification (SWC) registry under the number 116. \newline
 The weakness comes from the attempt of developers to introduce time depended functionality in their smart contracts,
 by reading the values block.timestamp or block.number \cite{swc116}. \newline
+
+\section{Background}
+
+\subsection{block.timestamp}
 But because Ethereum is decentralized, this information is controlled by miners. There is no restriction how the miners have to set the timestamp.
 It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
 \begin{equation} \label{eq:1}
@@ -20,7 +26,40 @@ H_s > P(H)_{H_s}
 \end{equation}
 The timestamp of the block $H_s$ in \ref{eq:1} must be greater then the timestamp of the previous block $P(H)_{H_s}$ \cite{ethyellowpaper2023}.
 
+consensus/ethash/consensus.go
+\begin{lstlisting}[laguage=go, caption="\cite{timestamp_code}"]
+func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
+  ...
+	// Verify the header's timestamp
+	if !uncle {
+		if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
+			return consensus.ErrFutureBlock
+		}
+	}
+	if header.Time <= parent.Time {
+		return errOlderBlockTime
+	}
+}
+\end{lstlisting}
+%todo
+\cite{timestamp_code}
+
+\subsection{block.number}
+
+
+\section{Variantes of the weakness}
+
+\subsection{Block - Timestamp}
+\subsubsection{Background}
+
+\subsection{Block - Number}
+\subsection{Non weaknesses}
+
 \section{Examples}
+\section{Consequences}
+\section{Tools}
+\section{Exploits}
+
 \subsection{Example1 - Game}
 \begin{solidity}
     function play() public {
