@@ -27,13 +27,20 @@ advanceBlock = () => {
             id: new Date().getTime()
         }, (err, _result) => {
             if (err) { return reject(err); }
-            return resolve(web3.eth.getBlock())
+            return resolve(web3.eth.getBlockNumber())
         });
     });
+}
+
+async function getCurrentBlockTimestamp() {
+    const currentBlockNumber = await web3.eth.getBlockNumber();
+    const currentBlock = await web3.eth.getBlock(currentBlockNumber);
+    return currentBlock.timestamp;
 }
 
 module.exports = {
     advanceBlock,
     advanceTime,
-    advanceTimeAndBlock
+    advanceTimeAndBlock,
+    getCurrentBlockTimestamp
 }
