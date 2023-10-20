@@ -30,7 +30,7 @@ The timestamp of the block $H_s$ in \ref{eq:1} must be greater then the timestam
 Nevertheless, in implementations of Ethereum, like Geth and Parity there is a restriction. The timestamp of the new block
 must at most 15 seconds in the future \cite{Conkas2021}. \newline
 
-\begin{lstlisting}[laguage=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
+\begin{lstlisting}[language=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
 func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
   ...
 	// Verify the header's timestamp
@@ -47,29 +47,63 @@ func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, pa
 \subsection{block.number}
 
 \subsection{Consistency of block time since Proof of Stake}
+In Proof of Work based systems block times are probabilistic, because they depend on the mining difficulty.
+The mining difficulty in those systems can vary and therefore the block time can also vary \cite{eth_blocks}. \newline
+In contrast Proof of Stake based systems have a constant block time.
+Before the Paris update of Ethereum, Ethereum was based on Proof of Stake. The so called Merge introduced Proof of Stake for Ethereum
+on the 15.09.2022 \cite{eth_history}. The current version of Ethereum has a constant block time of 12 seconds \cite{eth_blocks}.
 
-\section{Variantes of the weakness}
+\section{Variants of the weakness}
 
 \subsection{Block - Timestamp}
-\subsubsection{Background}
+The first variant of the block values as a proxy for time weakness occurs if the value block.timestamp is used in a smart contract.
+If developers try to to use the timestamp value as a source for an exact time this could leak to errors or false behaviors, because 
+the timestamp could be set wrong by the miner of the block.
 
 \subsection{Block - Number}
+Another variant of can happen, when the number value of the block is used. Developers could try to use the block number as a proxy for time,
+by dividing it by fourteen, because they assume that the time between two blocks is always around fourteen seconds.
+
 \subsection{Non weaknesses}
 
-\section{Examples}
-\section{Consequences}
-\section{Tools}
-\section{Exploits}
-
-\subsection{Example1 - Game}
-\begin{solidity}
+\section{Examples} 
+\subsection{Example1 - Game} \label{ex:1}
+\begin{solidity} 
     function play() public {
-        require(now > 1521763200 && neverPlayed == true);
+        require(block.timestamp > 1521763200 && neverPlayed == true);
         neverPlayed = false;
         msg.sender.transfer(1500 ether);
     }
 \end{solidity}
 Source: NCC Group - Time manipulation \cite{DASP2018}
+
+\subsection{Example2 - TimeLock} \label{ex:2}
+\begin{solidity} 
+    contract TimeLock {
+		...
+		function lockEth(uint _time, uint _amount) public payable {
+			...
+			users[msg.sender].unlockBlock = block.number + (_time / 14);
+			...
+		}
+
+    function withdraw() public {
+		...
+        require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
+		...
+    }
+}
+\end{solidity}
+Source: SWC116 \cite{swc116}
+
+\section{Consequences}
+If one of the described weaknesses occurs in a smart contract it can happen, that e.g. users of the smart contract can not access
+their ethereum or other information stored in the contract as shown in Example \ref{ex:2}. \newline
+Also it can happen that a miner is gaining an unfair advantage if he is able to set the timestamp of his mined block into the future,
+such that he is able to access resources earlier then other user as shown in Example \ref{ex:1}.
+
+\section{Tools}
+\section{Exploits}
 
 \section{Infos}
 There is neither a lower nor an upper bound on the number of pages. Assume that
@@ -82,16 +116,6 @@ but take care that it does not introduce nonsense.
 Write the paper in English. Typeset it in \LaTeX. The document class
 \verb"article" is fine, but you may use fancier formatting if you prefer. See
 the source of this document for an example.
-
-For Solidity code, add the line  \verb"\usepackage{solidity}" to your preamble
-and wrap the code in a \verb"solidity" environment, like below.
-\begin{solidity}
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
-contract HelloWorld {
-    string public greet = "Hello World!";
-}
-\end{solidity}
 
 The citation information for the papers in the TUWEL course is provided
 in the file \verb"seminar.bib". Add any further papers that you want to cite.
