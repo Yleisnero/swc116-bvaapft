@@ -11,16 +11,19 @@
 \newpage
 
 \section{Introduction}
-This report deals with a weakness in Solidity smart contracts, which is called "block values as a proxy for time".
-This weakness is described in the Smart Contract Weakness Classification (SWC) registry under the number 116. \newline
-The weakness comes from the attempt of developers to introduce time depended functionality in their smart contracts,
-by reading the values block.timestamp or block.number \cite{swc116}. \newline
+This report deals with a weakness in Solidity smart contracts, which is called
+"block values as a proxy for time". This weakness is described in the Smart
+Contract Weakness Classification (SWC) registry under the number 116. \newline
+The weakness comes from the attempt of developers to introduce time depended
+functionality in their smart contracts, by reading the values block.timestamp
+or block.number \cite{swc116}. \newline
 
 \section{Background}
 
 \subsection{block.timestamp}
-But because Ethereum is decentralized, this information is controlled by miners. There is no restriction how the miners have to set the timestamp.
-It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
+But because Ethereum is decentralized, this information is controlled by
+miners. There is no restriction how the miners have to set the timestamp. It
+only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
 \begin{equation} \label{eq:1}
 H_s > P(H)_{H_s}
 \end{equation}
@@ -31,14 +34,13 @@ consensus/ethash/consensus.go
 func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
   ...
 	// Verify the header's timestamp
-	if !uncle {
 		if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
 			return consensus.ErrFutureBlock
 		}
-	}
 	if header.Time <= parent.Time {
 		return errOlderBlockTime
 	}
+  ...
 }
 \end{lstlisting}
 %todo
