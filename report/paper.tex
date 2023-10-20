@@ -15,6 +15,10 @@ The weakness comes from the attempt of developers to introduce time depended fun
 by reading the values block.timestamp or block.number \cite{swc116}. \newline
 But because Ethereum is decentralized, this information is controlled by miners. There is no restriction how the miners have to set the timestamp.
 It only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
+\begin{equation} \label{eq:1}
+H_s > P(H)_{H_s}
+\end{equation}
+The timestamp of the block $H_s$ in \ref{eq:1} must be greater then the timestamp of the previous block $P(H)_{H_s}$ \cite{ethyellowpaper2023}.
 
 \section{Examples}
 \subsection{Example1 - Game}
