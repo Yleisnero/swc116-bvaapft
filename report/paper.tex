@@ -19,18 +19,18 @@ functionality in their smart contracts, by reading the values block.timestamp
 or block.number \cite{swc116}. \newline
 
 \section{Background}
-
 \subsection{block.timestamp}
-But because Ethereum is decentralized, this information is controlled by
-miners. There is no restriction how the miners have to set the timestamp. It
+Because Ethereum is decentralized, the block timestamp is controlled by the
+miners. In the Ethereum Yellow-Paper is no restriction how the miners have to set the timestamp. It
 only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
 \begin{equation} \label{eq:1}
 H_s > P(H)_{H_s}
 \end{equation}
 The timestamp of the block $H_s$ in \ref{eq:1} must be greater then the timestamp of the previous block $P(H)_{H_s}$ \cite{ethyellowpaper2023}.
+Nevertheless, in implementations of Ethereum, like Geth and Parity there is a restriction. The timestamp of the new block
+must at most 15 seconds in the future \cite{Conkas2021}. \newline
 
-consensus/ethash/consensus.go
-\begin{lstlisting}[laguage=go, caption="\cite{timestamp_code}"]
+\begin{lstlisting}[laguage=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
 func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
   ...
 	// Verify the header's timestamp
@@ -43,11 +43,10 @@ func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, pa
   ...
 }
 \end{lstlisting}
-%todo
-\cite{timestamp_code}
 
 \subsection{block.number}
 
+\subsection{Consistency of block time since Proof of Stake}
 
 \section{Variantes of the weakness}
 
