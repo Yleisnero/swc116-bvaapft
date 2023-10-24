@@ -1,0 +1,21 @@
+\subsubsection{Yellow Paper}
+The yellow paper of Ethereum states the each block has a positive integer value as a block number.
+The number of a block needs to be higher then the block number of the previous block.
+\begin{equation} \label{eq:blocknumber}
+    H_i === P(H)_{H_i} + 1
+\end{equation}
+This means that the number of a block is a reliable source to find out which is the latest block in the chain \cite{ethyellowpaper2023}.
+
+\subsubsection{Software Implementation}
+In Proof of Work based systems block times are probabilistic, because they depend on the mining difficulty.
+The mining difficulty in those systems can vary and therefore the block time can also vary \cite{eth_blocks}. \newline
+In contrast Proof of Stake based systems have a relatively constant block time.
+Before the Paris update of Ethereum, Ethereum was based on Proof of Stake. The so called Merge introduced Proof of Stake for Ethereum
+on the 15.09.2022 \cite{eth_history}. The current version of Ethereum has a hardcoded time of 12 seconds \cite{eth_blocks}. \newline
+
+\subsubsection{Weakness}
+Nevertheless a weakness in smart contracts can happen, if developers try to use the block number as a proxy for time.
+By assuming that the time between two blocks is always fourteen seconds (in Proof of Work), it is theoretically possible to
+calculate the current time, by dividing the block number by fourteen. In practice this does not work,
+because the intervals between blocks can vary in Proof of Work based systems. On top of that it can happen, that the
+block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}.
