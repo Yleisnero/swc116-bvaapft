@@ -27,9 +27,7 @@ The weakness comes from the attempt of developers to introduce time depended
 functionality in their smart contracts, by reading the values block.timestamp
 or block.number \cite{swc116}. \newline
 
-\section{Background}
-\subsection{block.timestamp}
-\include{chapters/block_timestamp}
+\input{chapters/block_timestamp}
 Because Ethereum is decentralized, the block timestamp is controlled by the
 miners. In the Ethereum Yellow-Paper is no restriction how the miners have to set the timestamp. It
 only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
@@ -55,8 +53,8 @@ func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, pa
 \end{lstlisting}
 
 \subsection{block.number}
-\include{chapters/block_number}
-\include{chapters/block_time_chart}
+\input{chapters/block_number}
+\input{chapters/block_time_chart}
 
 \subsection{Consistency of block time since Proof of Stake}
 In Proof of Work based systems block times are probabilistic, because they depend on the mining difficulty.

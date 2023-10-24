@@ -1,6 +1,9 @@
-\subsection{Block.Timestamp}
+\section{Block timestamp}
 
-\subsubsection{Yellow Paper}
+\subsection{Background}
+
+
+\paragraph{Yellow Paper}
 
 Miners set the block timestamp during during the mining process (source), in
 that process miners have to follow only the restriction of the Ethereum
@@ -18,7 +21,7 @@ This definition essentially means the timestamp of the block $H_s$ in
 \ref{eq:1} must be greater then the timestamp of the previous (parent) block
 $P(H)_{H_s}$.
 
-\subsubsection{Software Implementation}
+\paragraph{Software Implementation}
 
 In the implementations of Ethereum, like Geth and Parity there is a
 restriction. The timestamp of the new block must at most 15 seconds in the
@@ -26,7 +29,7 @@ future \cite{Conkas2021}. \newline
 
 TODO: add sources to the code
 
-\subsubsection{Issues}
+\paragraph{Issues}
 
 \begin{itemize}
 \item Do not use block.timestamp as time locks, since developer should follow the yellow paper, it is not sure that software implements the restrictions.
@@ -36,4 +39,4 @@ TODO: add sources to the code
 
 \paragraph{Do }
 
-\subsubsection{Examples} 
+\subsection{Examples} 
