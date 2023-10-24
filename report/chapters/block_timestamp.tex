@@ -40,3 +40,17 @@ TODO: add sources to the code
 \paragraph{Do }
 
 \subsection{Examples} 
+\begin{lstlisting}[language=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
+    func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
+      ...
+        // Verify the header's timestamp
+            if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
+                return consensus.ErrFutureBlock
+            }
+        if header.Time <= parent.Time {
+            return errOlderBlockTime
+        }
+      ...
+    }
+    \end{lstlisting}
+Source: SWC116 \cite{swc116}
