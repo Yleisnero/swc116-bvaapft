@@ -40,20 +40,15 @@ TODO: add sources to the code
 \paragraph{Do }
 
 \subsection{Examples} 
-\begin{solidity} 
-    contract TimeLock {
-		...
-		function lockEth(uint _time, uint _amount) public payable {
-			...
-			users[msg.sender].unlockBlock = block.number + (_time / 14);
-			...
-		}
-
-    function withdraw() public {
-		...
-        require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
-		...
+\begin{solidity}
+    function play() public {
+        require(block.timestamp > 1521763200 && neverPlayed == true);
+        neverPlayed = false;
+        msg.sender.transfer(1500 ether);
     }
-}
 \end{solidity}
-Source: SWC116 \cite{swc116}
+Source: NCC Group - Time manipulation \cite{DASP2018}
+
+\subsection{Consequences}
+A miner is gaining an unfair advantage if he is able to set the timestamp of his mined block into the future,
+such that he is able to access resources earlier then other users.

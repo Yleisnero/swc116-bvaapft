@@ -25,11 +25,23 @@ because the intervals between blocks can vary. On top of that it can happen, tha
 block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}.
 
 \subsection{Examples}
-\begin{solidity}
-    function play() public {
-        require(block.timestamp > 1521763200 && neverPlayed == true);
-        neverPlayed = false;
-        msg.sender.transfer(1500 ether);
+\begin{solidity} 
+    contract TimeLock {
+		...
+		function lockEth(uint _time, uint _amount) public payable {
+			...
+			users[msg.sender].unlockBlock = block.number + (_time / 14);
+			...
+		}
+
+    function withdraw() public {
+		...
+        require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
+		...
     }
+}
 \end{solidity}
-Source: NCC Group - Time manipulation \cite{DASP2018}
+Source: SWC116 \cite{swc116}
+
+\subsection{Consequences}
+Users of the smart contract can not access their Ethereum or other information stored in the contract.
