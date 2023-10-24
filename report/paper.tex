@@ -1,8 +1,14 @@
 \documentclass{article}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
 \usepackage{solidity}
 \usepackage{hyperref}
-\usepackage{pgfplots}
 \usepackage{filecontents}
+
+\pgfplotstableread[col sep=comma]{blocktime.csv}\datatable
+
+\usepgfplotslibrary{external}
+\tikzexternalize
 
 \title{SWC-116: Block values as a proxy for time}
 \author{Lorenz Kofler and Jonas Fischer}
@@ -27,7 +33,7 @@ or block.number \cite{swc116}. \newline
 Because Ethereum is decentralized, the block timestamp is controlled by the
 miners. In the Ethereum Yellow-Paper is no restriction how the miners have to set the timestamp. It
 only needs to be higher then the timestamp of the previous block \cite{Conkas2021}.
-\begin{equation} \label{eq:1}
+\begin{equation} \label{eq:2}
 H_s > P(H)_{H_s}
 \end{equation}
 The timestamp of the block $H_s$ in \ref{eq:1} must be greater then the timestamp of the previous block $P(H)_{H_s}$ \cite{ethyellowpaper2023}.

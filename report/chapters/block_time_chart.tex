@@ -1,18 +1,5 @@
-\begin{filecontents*}{blocktime.csv}
-    Date(UTC),AverageBlockTime
-    7/30/2015,4.46
-    7/31/2015,12.58
-    8/1/2015,16.34
-    8/2/2015,16.12
-\end{filecontents*}
-
-\pgfplotstableread[col sep=comma]{blocktime.csv}\datatable
-
 \begin{tikzpicture}
     \begin{axis}[
-      ybar,
-      bar width=.2cm,
-      width=\textwidth,
       height=10cm,
       ymin = 0,
       xtick=data,
