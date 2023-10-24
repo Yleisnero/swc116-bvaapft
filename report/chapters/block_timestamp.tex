@@ -40,17 +40,20 @@ TODO: add sources to the code
 \paragraph{Do }
 
 \subsection{Examples} 
-\begin{lstlisting}[language=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
-    func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
-      ...
-        // Verify the header's timestamp
-            if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
-                return consensus.ErrFutureBlock
-            }
-        if header.Time <= parent.Time {
-            return errOlderBlockTime
-        }
-      ...
+\begin{solidity} 
+    contract TimeLock {
+		...
+		function lockEth(uint _time, uint _amount) public payable {
+			...
+			users[msg.sender].unlockBlock = block.number + (_time / 14);
+			...
+		}
+
+    function withdraw() public {
+		...
+        require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
+		...
     }
-    \end{lstlisting}
+}
+\end{solidity}
 Source: SWC116 \cite{swc116}
