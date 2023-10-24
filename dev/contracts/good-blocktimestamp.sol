@@ -1,4 +1,4 @@
-contract Game {
+contract Roulette {
     uint startingTime;
 
     constructor() public {

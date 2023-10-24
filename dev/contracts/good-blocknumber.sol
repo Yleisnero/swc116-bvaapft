@@ -1,8 +1,9 @@
 contract Game {
     uint startingBlock;
 
-    constructor(uint blockOffset) public {
-        startingBlock = block.number + blockOffset;
+    constructor() public {
+        // Allowed to play afer 10 blocks
+        startingBlock = block.number + 10;
     }
 
     function play() public {
