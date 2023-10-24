@@ -25,7 +25,7 @@ because the intervals between blocks can vary. On top of that it can happen, tha
 block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}.
 
 \subsection{Examples}
-\begin{solidity} 
+\begin{solidity}
     function play() public {
         require(block.timestamp > 1521763200 && neverPlayed == true);
         neverPlayed = false;

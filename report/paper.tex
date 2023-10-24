@@ -1,14 +1,13 @@
 \documentclass{article}
-\usepackage{pgfplots}
-\usepackage{pgfplotstable}
+% \usepackage{pgfplots}
+% \usepackage{pgfplotstable}
+% \usepackage{filecontents}
 \usepackage{solidity}
 \usepackage{hyperref}
-\usepackage{filecontents}
 
-\pgfplotstableread[col sep=comma]{blocktime.csv}\datatable
-
-\usepgfplotslibrary{external}
-\tikzexternalize
+% \pgfplotstableread[col sep=comma]{blocktime.csv}\datatable
+% \usepgfplotslibrary{external}
+% \tikzexternalize
 
 \title{SWC-116: Block values as a proxy for time}
 \author{Lorenz Kofler and Jonas Fischer}
@@ -29,13 +28,13 @@ or block.number \cite{swc116}. \newline
 
 \input{chapters/block_timestamp}
 \input{chapters/block_number}
-\input{chapters/block_time_chart}
+% \input{chapters/block_time_chart}
 
 \section{Consequences}
 If one of the described weaknesses occurs in a smart contract it can happen, that e.g. users of the smart contract can not access
-their ethereum or other information stored in the contract as shown in Example \ref{ex:2}. \newline
+their ethereum or other information stored in the contract as shown in Example 2. \newline
 Also it can happen that a miner is gaining an unfair advantage if he is able to set the timestamp of his mined block into the future,
-such that he is able to access resources earlier then other user as shown in Example \ref{ex:1}.
+such that he is able to access resources earlier then other user as shown in Example 1.
 
 \section{Tools}
 \section{Exploits}
