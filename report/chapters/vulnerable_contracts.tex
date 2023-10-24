@@ -1,2 +1,60 @@
 \section{Vulnerable contracts}
 
+\begin{solidity}
+    function play() public {
+        require(block.timestamp > 1521763200 && neverPlayed == true);
+        neverPlayed = false;
+        msg.sender.transfer(1500 ether);
+    }
+\end{solidity}
+Source: NCC Group - Time manipulation \cite{DASP2018}
+
+\begin{solidity}
+    contract TimeLock {
+        struct User {
+            uint amount; // amount locked (in eth)
+            uint unlockBlock; // minimum block to unlock eth
+        }
+
+        mapping(address => User) private users;
+
+        // Tokens should be locked for exact time specified
+        function lockEth(uint _time, uint _amount) public payable {
+            require(msg.value == _amount, 'must send exact amount');
+            users[msg.sender].unlockBlock = block.number + (_time / 14);
+            users[msg.sender].amount = _amount;
+        }
+
+        // Withdraw tokens if lock period is over
+        function withdraw() public {
+            console.log("Trying to withdraw");
+
+            require(users[msg.sender].amount > 0, 'no amount locked');
+            require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
+
+            uint amount = users[msg.sender].amount;
+            users[msg.sender].amount = 0;
+            (bool success, ) = msg.sender.call.value(amount)("");
+
+            console.log("Withdraw done");
+
+            require(success, 'transfer failed');
+        }
+    }
+\end{solidity}
+Source: SWC116 \cite{swc116}
+
+\begin{solidity}
+    uint256 constant private salt =  block.timestamp;
+    
+    function random(uint Max) constant private returns (uint256 result){
+        //get the best seed for randomness
+        uint256 x = salt * 100 / Max;
+        uint256 y = salt * block.number / (salt % 5) ;
+        uint256 seed = block.number/3 + (salt % 300) + Last_Payout +y; 
+        uint256 h = uint256(block.blockhash(seed)); 
+    
+        return uint256((h / x)) % Max + 1; //random number between 1 and Max
+    }
+\end{solidity}
+Source: The Run smart contract \cite{therun_contract}

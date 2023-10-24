@@ -1,13 +1,12 @@
-contract Roulette {
-    uint startingTime;
+contract Game {
+    uint expiryTimestamp;
 
-    constructor() public {
-        startingTime = block.timestamp;
+    constructor(uint expiry) public {
+        expiryTimestamp = expiry;
     }
 
     function play() public {
-        // is in the future
-        require(block.timestamp > startingTime);
-        msg.sender.transfer(2 ether);
+        // Safe to use because block timestamp can not be modified backwards
+        require(block.timestamp < expiryTimestamp);
     }
 }

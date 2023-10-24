@@ -2,10 +2,8 @@
 
 \subsection{Background}
 
-
 \paragraph{Yellow Paper}
-
-Miners set the block timestamp during during the mining process (source), in
+Miners set the block timestamp during the mining process (source), in
 that process miners have to follow only the restriction of the Ethereum
 Yellow-Paper, which is the following:
 
@@ -19,15 +17,26 @@ H_s > P(H)_{H_s}
 
 This definition essentially means the timestamp of the block $H_s$ in
 \ref{eq:1} must be greater then the timestamp of the previous (parent) block
-$P(H)_{H_s}$.
+$P(H)_{H_s}$ \cite{ethyellowpaper2023}.
 
 \paragraph{Software Implementation}
-
 In the implementations of Ethereum, like Geth and Parity there is a
 restriction. The timestamp of the new block must at most 15 seconds in the
 future \cite{Conkas2021}. \newline
 
-TODO: add sources to the code
+\begin{lstlisting}[language=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
+    func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
+      ...
+        // Verify the header's timestamp
+            if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
+                return consensus.ErrFutureBlock
+            }
+        if header.Time <= parent.Time {
+            return errOlderBlockTime
+        }
+      ...
+    }
+    \end{lstlisting}
 
 \paragraph{Issues}
 
@@ -36,19 +45,34 @@ TODO: add sources to the code
 \item Do not use block.timestamp as a source of randomness.
 \end{itemize}
 
-
-\paragraph{Do }
-
-\subsection{Examples} 
+\subsection{Examples}
+\subsubsection{Example containing weakness}
 \begin{solidity}
-    function play() public {
-        require(block.timestamp > 1521763200 && neverPlayed == true);
-        neverPlayed = false;
-        msg.sender.transfer(1500 ether);
+    contract Firework {
+        function startFirework() public {
+            // 01.01.2024 00:00:00 GMT+0100
+            require(block.timestamp > 1704063600);
+        }
     }
 \end{solidity}
-Source: NCC Group - Time manipulation \cite{DASP2018}
 
+\subsubsection{Example without a weakness}
+\begin{solidity}
+    contract Game {
+        uint expiry;
+    
+        constructor(uint expiryTimestamp) public {
+            expiry = expiryTimestamp;
+        }
+    
+        function play() public {
+            // Safe to use because block timestamp can not be modified backwards
+            require(block.timestamp < expiry);
+        }
+    }
+\end{solidity}
+    
 \subsection{Consequences}
-A miner is gaining an unfair advantage if he is able to set the timestamp of his mined block into the future,
-such that he is able to access resources earlier then other users.
+A miner is gaining an unfair advantage if he is able to set the timestamp
+of his mined block into the future, such that he is able to access
+resources earlier then other users or trigger events before they are meant to happen.

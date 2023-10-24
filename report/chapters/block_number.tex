@@ -1,21 +1,22 @@
-\section{Block timestamp}
+\section{Block number}
 
 \subsection{Background}
 
 \paragraph{Yellow Paper}
 The yellow paper of Ethereum states the each block has a positive integer value as a block number.
-The number of a block needs to be higher then the block number of the previous block.
+The number of a block needs to be higher then the block number of the previous block \cite{ethyellowpaper2023}.
 \begin{equation} \label{eq:blocknumber}
-    H_i === P(H)_{H_i} + 1
+    H_i \equiv P(H)_{H_i} + 1
 \end{equation}
-This means that the number of a block is a reliable source to find out which is the latest block in the chain \cite{ethyellowpaper2023}.
+This means that the number of a block is a reliable source to find out 
+the number of the current block and in which block a transaction was included \cite{eth_blocks}.
 
 \paragraph{Software Implementation}
 In Proof of Work based systems block times are probabilistic, because they depend on the mining difficulty.
 The mining difficulty in those systems can vary and therefore the block time can also vary \cite{eth_blocks}. \newline
 In contrast Proof of Stake based systems have a relatively constant block time.
 Before the Paris update of Ethereum, Ethereum was based on Proof of Stake. The so called Merge introduced Proof of Stake for Ethereum
-on the 15.09.2022 \cite{eth_history}. The current version of Ethereum has a hardcoded time of 12 seconds \cite{eth_blocks}. \newline
+on the 15.09.2022 \cite{eth_history}. The current version of Ethereum has a hardcoded block time of 12 seconds \cite{eth_blocks}. \newline
 
 \paragraph{Issues}
 Nevertheless a weakness in smart contracts can happen, if developers try to use the block number as a proxy for time.
@@ -25,23 +26,39 @@ because the intervals between blocks can vary. On top of that it can happen, tha
 block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}.
 
 \subsection{Examples}
-\begin{solidity} 
-    contract TimeLock {
-		...
-		function lockEth(uint _time, uint _amount) public payable {
-			...
-			users[msg.sender].unlockBlock = block.number + (_time / 14);
-			...
+
+\subsubsection{Example containing weakness}
+\begin{solidity}
+    contract Game {
+    	uint startingBlock;
+
+		constructor(uint timeOffset) public {
+			startingBlock = block.number + (timeOffset / 14);
 		}
 
-    function withdraw() public {
-		...
-        require(block.number >= users[msg.sender].unlockBlock, 'lock period not over');
-		...
-    }
-}
+		function play() public {
+			require(block.number >= startingBlock);
+		}
+	}
 \end{solidity}
-Source: SWC116 \cite{swc116}
+
+\subsubsection{Example without a weakness}
+\begin{solidity}
+	contract Game {
+		uint startingBlock;
+	
+		constructor() public {
+			// Allowed to play afer 10 blocks
+			startingBlock = block.number + 10;
+		}
+	
+		function play() public {
+			require(block.number >= startingBlock);
+		}
+	}
+\end{solidity}
+
 
 \subsection{Consequences}
-Users of the smart contract can not access their Ethereum or other information stored in the contract.
+User may experience inaccurate time behavior in the contract.
+Users may not have access their Ethereum or other information stored in the contract.
