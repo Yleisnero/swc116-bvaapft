@@ -1,12 +1,29 @@
 \section{Tools and code properties}
 
 \subsection{conkas}
-\begin{lstlisting}[language=bash, caption="conkas output for the time lock contract"]
-    Analysing /contracts/time_lock.sol:TimeLock...
-    Vulnerability: Transaction Ordering Dependence. Maybe in function: withdraw(). PC: 0x3b9. Line number: 29.
-    Vulnerability: Integer Overflow. Maybe in function: withdraw(). PC: 0x3d3. Line number: .
-    If a = 115792089237316195423570985008687907853269984665640564039457584007913129639920
-    and b = 63
+Conkas checks if a variable in the code is called 'timestamp' \cite{conkas_opcodes} \newline
+\begin{lstlisting}
+    TIME_MANIPULATION_VAR = 'timestamp'
+    def __is_based_on_time(data):
+    for var in get_vars(data):
+        var_name = str(var)
+        if var_name == TIME_MANIPULATION_VAR:
+            return True
+        return False
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption="conkas output for the timed\_crowdsale.sol contract"]
+    ==== Dependence on predictable environment variable ====
+    SWC ID: 116
+    Severity: Low
+    Contract: TimedCrowdsale
+    Function name: run()
+    PC address: 98
+    Estimated Gas Usage: 176 - 271
+    A control flow decision is made based on The block.timestamp environment variable.
+    The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
+    --------------------
+    In file: /contracts/timed_crowdsale.sol:14    
 \end{lstlisting}
 
 \subsection{mythril}
@@ -14,8 +31,6 @@ Mythril looks for the opcodes TIMESTAMP and NUMBER in the code and warns the use
 \verb|predictable_ops = ["COINBASE", "GASLIMIT", "TIMESTAMP", "NUMBER"]|
 
 \begin{lstlisting}[language=bash, caption="Mythril output for the time lock contract"]
-...
-
 ==== Dependence on predictable environment variable ====
 SWC ID: 120
 Severity: Low
@@ -29,6 +44,4 @@ The block.number environment variable is used to determine a control flow decisi
 In file: /contracts/time_lock.sol:25
 
 require(block.number >= users[msg.sender].unlockBlock, 'lock period not over')
-
-...
 \end{lstlisting}

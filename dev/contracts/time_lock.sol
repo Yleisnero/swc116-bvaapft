@@ -8,6 +8,7 @@ contract TimeLock {
     struct User {
         uint amount; // amount locked (in eth)
         uint unlockBlock; // minimum block to unlock eth
+        unit timestamp;
     }
 
     mapping(address => User) private users;
