@@ -1,6 +1,6 @@
 \section{Tools and code properties}
 
-\subsection{conkas}
+\subsection{Conkas}
 Conkas checks if a variable in the code is called 'timestamp' \cite{conkas_opcodes} \newline
 \begin{lstlisting}
     TIME_MANIPULATION_VAR = 'timestamp'
@@ -13,20 +13,26 @@ Conkas checks if a variable in the code is called 'timestamp' \cite{conkas_opcod
 \end{lstlisting}
 
 \begin{lstlisting}[language=bash, caption="conkas output for the timed\_crowdsale.sol contract"]
-    ==== Dependence on predictable environment variable ====
-    SWC ID: 116
-    Severity: Low
-    Contract: TimedCrowdsale
-    Function name: run()
-    PC address: 98
-    Estimated Gas Usage: 176 - 271
-    A control flow decision is made based on The block.timestamp environment variable.
-    The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
-    --------------------
-    In file: /contracts/timed_crowdsale.sol:14    
+==== Dependence on predictable environment variable ====
+SWC ID: 116
+Severity: Low
+Contract: TimedCrowdsale
+Function name: run()
+PC address: 98
+Estimated Gas Usage: 176 - 271
+A control flow decision is made based on The block.timestamp environment variable.
+The block.timestamp environment variable is used to determine a control flow decision. Note that the values of variables like coinbase, gaslimit, block number and timestamp are predictable and can be manipulated by a malicious miner. Also keep in mind that attackers know hashes of earlier blocks. Don't use any of those environment variables as sources of randomness and be aware that use of these variables introduces a certain level of trust into miners.
+--------------------
+In file: /contracts/timed_crowdsale.sol:14
+
+if (isSaleFinished()) {
+        emit Finished();
+    } else {
+        emit notFinished();
+    }
 \end{lstlisting}
 
-\subsection{mythril}
+\subsection{Mythril}
 Mythril looks for the opcodes TIMESTAMP and NUMBER in the code and warns the user if they are found \cite{mythril_opcodes}. \newline
 \verb|predictable_ops = ["COINBASE", "GASLIMIT", "TIMESTAMP", "NUMBER"]|
 
@@ -44,4 +50,58 @@ The block.number environment variable is used to determine a control flow decisi
 In file: /contracts/time_lock.sol:25
 
 require(block.number >= users[msg.sender].unlockBlock, 'lock period not over')
+\end{lstlisting}
+
+\subsection{Osiris}
+Like Mythril, Osiris looks for the opcodes TIMESTAMP and NUMBER in the code and warns the user if they are found \cite{osiris_opcodes}. \newline
+\begin{lstlisting}
+    opcodes = {
+        ...
+        "BLOCKHASH": [0x40, 1, 1],
+        "COINBASE": [0x41, 0, 1],
+        "TIMESTAMP": [0x42, 0, 1],
+        "NUMBER": [0x43, 0, 1]
+        ...
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption="Osiris output for the time lock contract"]
+    TODO
+\end{lstlisting}
+
+\subsection{Oyente}
+Because Osiris is built on top of Oyente, the same code for looking for opcodes is found in both tools \cite{oyente_opcodes}. \newline
+
+\begin{lstlisting}
+    opcodes = {
+        ...
+        "BLOCKHASH": [0x40, 1, 1],
+        "COINBASE": [0x41, 0, 1],
+        "TIMESTAMP": [0x42, 0, 1],
+        "NUMBER": [0x43, 0, 1]
+        ...
+    }
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash, caption="Oyente output for the time lock contract"]
+    TODO
+\end{lstlisting}
+
+
+\subsection{SmartCheck}
+SmartCheck uses pattern matching on the .sol files to find usages of block.timestamp inside expression which contain "==" or "!=" and which are not a function argument \cite{smartcheck}.
+\begin{lstlisting}[language=xml]
+    <XPath>
+    //expression
+        [comparison]
+        [expression//environmentalVariable
+            [matches(text()[1], "^block\.timestamp|now$")]
+            [not(ancestor::*[4][self::functionCall])]]
+    </XPath>
+\end{lstlisting}
+
+TODO BLOCK.NUMBER ?
+
+\begin{lstlisting}[language=bash, caption="Oyente output for the time lock contract"]
+    TODO
 \end{lstlisting}
