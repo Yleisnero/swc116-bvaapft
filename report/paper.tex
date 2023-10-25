@@ -1,13 +1,6 @@
 \documentclass{article}
-% \usepackage{pgfplots}
-% \usepackage{pgfplotstable}
-% \usepackage{filecontents}
 \usepackage{solidity}
 \usepackage{hyperref}
-
-% \pgfplotstableread[col sep=comma]{blocktime.csv}\datatable
-% \usepgfplotslibrary{external}
-% \tikzexternalize
 
 \title{SWC-116: Block values as a proxy for time}
 \author{Lorenz Kofler and Jonas Fischer}
@@ -20,20 +13,18 @@
 
 \section{Introduction}
 This report deals with a weakness in Solidity smart contracts, which is called
-"block values as a proxy for time". This weakness is described in the Smart
-Contract Weakness Classification (SWC) registry under the number 116. \newline
-The weakness comes from the attempt of developers to introduce time depended
-functionality in their smart contracts, by reading the values block.timestamp
-or block.number \cite{swc116}. \newline
+\textit{block values as a proxy for time}. The weakness is described in the Smart
+Contract Weakness Classification (SWC) registry under the number 116. The
+weakness comes from the attempt of developers to introduce time depended
+functionality in their smart contracts, by reading the values \textit{block.timestamp}
+or \textit{block.number} \cite{swc116}. \newline
 
 \input{chapters/block_timestamp}
+\newpage
 \input{chapters/block_number}
 % \input{chapters/block_time_chart}
-
 \input{chapters/vulnerable_contracts}
-
 \input{chapters/code_properties}
-
 \input{chapters/exploits}
 
 \newpage
