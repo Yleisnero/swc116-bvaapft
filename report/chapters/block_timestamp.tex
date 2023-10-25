@@ -1,44 +1,75 @@
 \section{Block timestamp}
 
-\subsection{Background}
+\subsection{Background} 
+The miner is responsible for setting the timestamp within a block. The yellow
+paper defines which rules this value has to follow. But depending on the
+specific consensus mechanism there are also consensous specification and
+software imposed restrictions for the timestamp value. 
 
 \paragraph{Yellow Paper}
-Miners set the block timestamp during the mining process (source), in
-that process miners have to follow only the restriction of the Ethereum
-Yellow-Paper, which is the following:
+Pre-merge the only restriction was the yellow paper, which set that the that
+the timestamp of the new block has to be greater than the timestamp of the
+parent block \cite{ethyellowpaper2023}.
 
-We define $H_s$ is the timestamp of Block $H$, $P(H)$ is the parent
-block of block $H$. The Yellow-Paper defines the following relation for a valid
-block timestamp \cite{ethyellowpaper2023}.
+\paragraph{Software Implementation - Proof-of-work}
+The currently most used ethereum implementation Geth rejects blocks which
+timestamps are more than 15 seconds in the future
+\cite{go-ethereum-15-sek-limit}. Hence when the proof-of-work consensus
+mechanism was used it was possible for the miner to tamper
+with the timestamp and change it up to plus 15 seconds.
 
-\begin{equation} \label{eq:1}
-H_s > P(H)_{H_s}
-\end{equation}
+\paragraph{Software Implementation - Proof-of-stake}
+Proof-of-stake ethereum introduced slots, where each slot has a time frame of
+12 seconds \cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}.
+For each slot one random validator is selected to propose a block, which other
+random validatores have vote about its validity. The specification defines
+how to calculate the timestamp at a specific slot with the function
+\textit{compute\_timestmap\_at\_slot} \cite{compute-timestamp-at-slot}. The
+timestamp is calculated with $genesis\_time + slots\_since\_genesis *
+SECONDS\_PER\_SLOT$. The function \textit{process\_execution\_payload} then
+checks if the blocks timestamp equals the calculated timestamp at that slot
+\cite{process-execution-payload}. Hence each slot has a predefined timestamp
+and it is therefore impossible to tamper with but also much more easier to
+predict.
+% \begin{lstlisting}[language=python, caption=proof-of-stake consensous
+% specification\cite{compute-timestamp-at-slot}]
+% def compute_timestamp_at_slot(state: beaconstate, slot: slot) -> uint64:
+%     slots_since_genesis = slot - genesis_slot
+%     return uint64(state.genesis_time + slots_since_genesis * seconds_per_slot)
+% \end{lstlisting}
 
-This definition essentially means the timestamp of the block $H_s$ in
-\ref{eq:1} must be greater then the timestamp of the previous (parent) block
-$P(H)_{H_s}$ \cite{ethyellowpaper2023}.
 
-\paragraph{Software Implementation}
-In the implementations of Ethereum, like Geth and Parity there is a
-restriction. The timestamp of the new block must at most 15 seconds in the
-future \cite{Conkas2021}. \newline
 
-\begin{lstlisting}[language=go, caption="The restriction for the timestamp in Geth. Source: consensus/ethash/consensus.go \cite{timestamp_code}"]
-    func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
-      ...
-        // Verify the header's timestamp
-            if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
-                return consensus.ErrFutureBlock
-            }
-        if header.Time <= parent.Time {
-            return errOlderBlockTime
-        }
-      ...
-    }
-    \end{lstlisting}
+% \paragraph{Yellow Paper}
+% Miners set the block timestamp during the mining process (source), in
+% that process miners have to follow only the restriction of the Ethereum
+% Yellow-Paper, which is the following:
+% 
+% We define $H_s$ is the timestamp of Block $H$, $P(H)$ is the parent
+% block of block $H$. The Yellow-Paper defines the following relation for a valid
+% block timestamp \cite{ethyellowpaper2023}.
+% 
+% This definition essentially means the timestamp of the block $H_s$ in
+% \ref{eq:1} must be greater then the timestamp of the previous (parent) block
+% $P(H)_{H_s}$ \cite{ethyellowpaper2023}.
 
-\paragraph{Issues}
+%\paragraph{Software Implementation}
+%
+%\begin{lstlisting}[language=go, caption=The restriction for the timestamp in Geth. Source: \textit{consensus/ethash/consensus.go} \cite{timestamp_code}]
+%func (ethash *Ethash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, unixNow int64) error {
+%  ...
+%    // Verify the header's timestamp
+%        if header.Time > uint64(unixNow+allowedFutureBlockTimeSeconds) {
+%            return consensus.ErrFutureBlock
+%        }
+%    if header.Time <= parent.Time {
+%        return errOlderBlockTime
+%    }
+%  ...
+%}
+%\end{lstlisting}
+%
+%\paragraph{Issues}
 
 \begin{itemize}
 \item Do not use block.timestamp as time locks, since developer should follow the yellow paper, it is not sure that software implements the restrictions.
@@ -48,28 +79,28 @@ future \cite{Conkas2021}. \newline
 \subsection{Examples}
 \subsubsection{Example containing weakness}
 \begin{solidity}
-    contract Firework {
-        function startFirework() public {
-            // 01.01.2024 00:00:00 GMT+0100
-            require(block.timestamp > 1704063600);
-        }
+contract Firework {
+    function startFirework() public {
+        // 01.01.2024 00:00:00 GMT+0100
+        require(block.timestamp > 1704063600);
     }
+}
 \end{solidity}
 
 \subsubsection{Example without a weakness}
 \begin{solidity}
-    contract Game {
-        uint expiry;
-    
-        constructor(uint expiryTimestamp) public {
-            expiry = expiryTimestamp;
-        }
-    
-        function play() public {
-            // Safe to use because block timestamp can not be modified backwards
-            require(block.timestamp < expiry);
-        }
+contract Game {
+    uint expiry;
+
+    constructor(uint expiryTimestamp) public {
+        expiry = expiryTimestamp;
     }
+
+    function play() public {
+        // Safe to use because block timestamp can not be modified backwards
+        require(block.timestamp < expiry);
+    }
+}
 \end{solidity}
     
 \subsection{Consequences}
