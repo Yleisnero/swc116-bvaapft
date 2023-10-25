@@ -3,7 +3,7 @@
 \subsection{Background} 
 The miner is responsible for setting the timestamp within a block. The yellow
 paper defines which rules this value has to follow. But depending on the
-specific consensus mechanism there are also consensous specification and
+specific consensus mechanism there are also consensus specification and
 software imposed restrictions for the timestamp value. 
 
 \paragraph{Yellow Paper}
@@ -11,7 +11,7 @@ Pre-merge the only restriction was the yellow paper, which set that the that
 the timestamp of the new block has to be greater than the timestamp of the
 parent block \cite{ethyellowpaper2023}.
 
-\paragraph{Proof-of-work}
+\paragraph{Proof of work}
 The currently most used ethereum implementation Geth rejects blocks which
 timestamps are more than 15 seconds in the future
 \cite{go-ethereum-15-sek-limit}. Hence when the proof-of-work consensus
@@ -64,8 +64,8 @@ contract Firework {
 \end{solidity}
 The Listing \ref{timestamp_weakness} shows the contract \textit{Firework}. It
 is used to start the firework on New Years. But since it is using
-\textit{block.timestamp} is used it could be possible that the firework started at
-maximum 12 seconds late.
+\textit{block.timestamp} is used it could be possible that the firework started
+at maximum 12 seconds late.
 
 % ist ja auch vulnerable weil man die spielzeit für alle verkürzen kann!
 %\begin{solidity}[caption=Non Vulnerable smart contract during proof-of-work Ethereum]
