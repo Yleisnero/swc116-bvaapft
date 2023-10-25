@@ -37,3 +37,7 @@ testnet). But idk if it will ever change on the mainnet?
 different modes of operation, e.g. testing, but not generally between different
 networks" (source beacon-chain.md)
 
+
+# Geth is not a consensus client for proof-of-stake`:
+
+https://geth.ethereum.org/docs/fundamentals/peer-to-peer
