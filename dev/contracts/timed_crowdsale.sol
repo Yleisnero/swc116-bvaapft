@@ -1,3 +1,9 @@
+/*
+Source: https://swcregistry.io/docs/SWC-116/
+Attacker can make the contract emit `Finished` 15 seconds earlier.
+- mitigated in PoS
+*/
+
 pragma solidity ^0.5.0;
 
 contract TimedCrowdsale {

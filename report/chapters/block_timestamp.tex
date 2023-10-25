@@ -52,17 +52,11 @@ worst case the action could be triggered 12 seconds late. The only way to
 prevent this is to either build a contract which does not depend on the exact
 time or to stop using the block timestamp.
 
-\subsection{Weakness Example Contract}
+\subsection{Weakness Example}
 
-\begin{solidity}[caption=Weakness, label={timestamp_weakness}]
-contract Firework {
-  function startFirework() public {
-    // 01.01.2024 00:00:00 GMT+0100
-    require(block.timestamp > 1704063600);
-  }
-}
-\end{solidity}
-The Listing \ref{timestamp_weakness} shows the contract \textit{Firework}. It
+\lstinputlisting[language=Solidity, caption={Weakness},linerange={4-12}, label={lst:timestamp_weakness}]{../dev/contracts/bad-blocktimestamp.sol}
+
+The Listing \ref{lst:timestamp_weakness} shows the contract \textit{Firework}. It
 is used to start the firework on New Years. But since it is using
 \textit{block.timestamp} is used it could be possible that the firework started
 at maximum 12 seconds late.

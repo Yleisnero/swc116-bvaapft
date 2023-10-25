@@ -37,38 +37,26 @@ constant, which means the block number becomes a more reliable source for time
 proxy for time, because it is not guaranteed that the block time will always
 stay the same in the future.	
 
-\subsection{Examples}
+\subsection{Weakness Example}
 
-\subsubsection{Example containing weakness}
-\begin{solidity}
-contract Game {
-  uint startingBlock;
+\lstinputlisting[language=Solidity, caption={Block Number Weakness},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/bad-blocknumber.sol}
 
-  constructor(uint timeOffset) public {
-    startingBlock = block.number + (timeOffset / 12);
-  }
 
-  function play() public {
-    require(block.number >= startingBlock);
-  }
-}
-\end{solidity}
-
-\subsubsection{Example without a weakness}
-\begin{solidity}
-contract Game {
-  uint startingBlock;
-
-  constructor() public {
-    // Allowed to play afer 10 blocks
-    startingBlock = block.number + 10;
-  }
-
-  function play() public {
-    require(block.number >= startingBlock);
-  }
-}
-\end{solidity}
+% \subsubsection{Example without a weakness}
+% \begin{solidity}
+% contract Game {
+%   uint startingBlock;
+% 
+%   constructor() public {
+%     // Allowed to play afer 10 blocks
+%     startingBlock = block.number + 10;
+%   }
+% 
+%   fun play() public {
+%     require(block.number >= startingBlock);
+%   }
+% }
+% \end{solidity}
 
 
 \subsection{Consequences}

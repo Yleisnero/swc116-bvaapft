@@ -1,5 +1,7 @@
 /*
- * @author: Kaden Zipfel
+@author: Kaden Zipfel
+Source: https://swcregistry.io/docs/SWC-116/
+Not each block takes 14 second
  */
 
 pragma solidity ^0.5.0;
