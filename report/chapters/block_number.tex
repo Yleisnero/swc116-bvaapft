@@ -19,11 +19,13 @@ Before the Paris update of Ethereum, Ethereum was based on Proof of Stake. The s
 on the 15.09.2022 \cite{eth_history}. The current version of Ethereum has a hardcoded block time of 12 seconds \cite{eth_blocks}. \newline
 
 \paragraph{Issues}
-Nevertheless a weakness in smart contracts can happen, if developers try to use the block number as a proxy for time.
+A weakness in smart contracts can happen, if developers try to use the block number as a proxy for time.
 By assuming that the time between two blocks is always fourteen seconds (in Proof of Work), it is theoretically possible to
 calculate the current time, by dividing the block number by fourteen. In practice this does not work,
 because the intervals between blocks can vary. On top of that it can happen, that the
-block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}.
+block intervals change, e.g. when the difficulty bomb was introduced or when a fork of the chain is done \cite{swc116}. \newline
+In Proof of Stake based systems the block time is more constant, which means the block number becomes a more reliable source for time \cite{bellatrix_specs}.
+Nevertheless, the block number should not be used as a proxy for time, because it is not guaranteed that the block time will always stay the same in the future.	
 
 \subsection{Examples}
 
