@@ -55,3 +55,7 @@ contract TimeLock {
         return uint256((h / x)) % Max + 1; //random number between 1 and Max
     }
 \end{solidity}
+
+\begin{solidity}[caption=Timestamp depended contract \cite{SmartCheck2018}]
+    if (block.timestamp \% 2 == 0) winner = pl1 ; else winner = pl2;
+\end{solidity}
