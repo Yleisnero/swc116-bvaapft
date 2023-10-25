@@ -1,7 +1,9 @@
 \section{Tools and code properties}
+Different tools exist, which analyze smart contracts and trying to find possible weaknesses in the contracts. \newline
+In the following are listed five tools and how they detect "block values as a proxy for time" in the code.
 
 \subsection{Conkas}
-Conkas checks if a variable in the code is called 'timestamp' \cite{conkas_opcodes} \newline
+Conkas checks if a variable in the code is called 'timestamp' \cite{conkas_opcodes}
 \begin{lstlisting}
     TIME_MANIPULATION_VAR = 'timestamp'
     def __is_based_on_time(data):
@@ -87,7 +89,6 @@ Because Osiris is built on top of Oyente, the same code for looking for opcodes 
     TODO
 \end{lstlisting}
 
-
 \subsection{SmartCheck}
 SmartCheck uses pattern matching on the .sol files to find usages of block.timestamp inside expression which contain "==" or "!=" and which are not a function argument \cite{smartcheck}.
 \begin{lstlisting}[language=xml]
@@ -99,8 +100,6 @@ SmartCheck uses pattern matching on the .sol files to find usages of block.times
             [not(ancestor::*[4][self::functionCall])]]
     </XPath>
 \end{lstlisting}
-
-TODO BLOCK.NUMBER ?
 
 \begin{lstlisting}[language=bash, caption="Oyente output for the time lock contract"]
     TODO
