@@ -11,7 +11,7 @@ Pre-merge the only restriction was the yellow paper, which set that the that
 the timestamp of the new block has to be greater than the timestamp of the
 parent block \cite{ethyellowpaper2023}.
 
-\paragraph{Software Implementation - Proof-of-work}
+\paragraph{Proof-of-work}
 The currently most used ethereum implementation Geth rejects blocks which
 timestamps are more than 15 seconds in the future
 \cite{go-ethereum-15-sek-limit}. Hence when the proof-of-work consensus
@@ -21,7 +21,7 @@ and change it up to plus 15 seconds. This client behaviour let to the
 usage of the block timestamp is safe if the time dependent event can vary by up
 to 15 seconds.
 
-\paragraph{Software Implementation - Proof of stake}
+\paragraph{Proof of stake}
 Proof of stake ethereum introduced slots, where each slot has a time frame of
 12 seconds \cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}.
 For each slot one random validator is selected to propose a block, which other
@@ -37,19 +37,24 @@ also much more easier to predict.
 
 \subsection{Consequences}
 
-
 In Proof of work Ethereum, a miner could gain an unfair advantage by
 manipulating the timestamp of their mined block, setting it into the future.
 This allowed them to access resources ahead of other users or trigger events
 prematurely, disrupting the intended timing of these events.
 
-With the new Proof-of-Stake consensus mechanism, using timestamps for
-time-dependent events is no longer a concern. If a miner attempts to manipulate
-the timestamp, the system will automatically reject the block.
+In the new proof of stake consensus mechanism, each slot has a predetermined
+timestamp. If a miner attempts to manipulate the timestamp, the system will
+automatically reject the block.
 
-\subsection{Examples}
+Even though it is not possible for the verifier to tamper with the timestamp,
+it is still not reliable enough to triggering exact time depending task. In the
+worst case the action could be triggered 12 seconds late. The only way to
+prevent this is to either build a contract which does not depend on the exact
+time or to stop using the block timestamp.
 
-\begin{solidity}[caption=Vulnerable smart contract during proof-of-work Ethereum]
+\subsection{Weakness Example Contract}
+
+\begin{solidity}[caption=Weakness, label={timestamp_weakness}]
 contract Firework {
   function startFirework() public {
     // 01.01.2024 00:00:00 GMT+0100
@@ -57,20 +62,25 @@ contract Firework {
   }
 }
 \end{solidity}
+The Listing \ref{timestamp_weakness} shows the contract \textit{Firework}. It
+is used to start the firework on New Years. But since it is using
+\textit{block.timestamp} is used it could be possible that the firework started at
+maximum 12 seconds late.
 
-\begin{solidity}[caption=Non Vulnerable smart contract during proof-of-work Ethereum]
-contract Game {
-  uint expiry;
-
-  constructor(uint expiryTimestamp) public {
-    expiry = expiryTimestamp;
-  }
-
-  function play() public {
-    // Safe to use because block timestamp can not be modified backwards
-    require(block.timestamp < expiry);
-  }
-}
-\end{solidity}
+% ist ja auch vulnerable weil man die spielzeit für alle verkürzen kann!
+%\begin{solidity}[caption=Non Vulnerable smart contract during proof-of-work Ethereum]
+%contract Game {
+%  uint expiry;
+%
+%  constructor(uint expiryTimestamp) public {
+%    expiry = expiryTimestamp;
+%  }
+%
+%  function play() public {
+%    // Safe to use because block timestamp can not be modified backwards
+%    require(block.timestamp < expiry);
+%  }
+%}
+%\end{solidity}
 
     
