@@ -1,9 +1,9 @@
 \section{Block timestamp}
 
 \subsection{Background} 
-The miner is responsible for setting the timestamp within a block. The yellow
-paper defines which rules this value has to follow. But depending on the
-specific consensus mechanism there are also consensus specification and
+The miners/validators are responsible for setting the timestamp their provided block.
+The yellow paper defines which rules this value has to follow. But depending on
+the specific consensus mechanism there are also consensus specification and
 software imposed restrictions for the timestamp value. 
 
 \paragraph{Yellow Paper}
@@ -12,28 +12,33 @@ the timestamp of the new block has to be greater than the timestamp of the
 parent block \cite{ethyellowpaper2023}.
 
 \paragraph{Proof of work}
-The currently most used ethereum implementation Geth rejects blocks which
-timestamps are more than 15 seconds in the future
-\cite{go-ethereum-15-sek-limit}. Hence when the proof-of-work consensus
+The currently most used Ethereum implementation Geth (go-ethereum) rejects
+blocks which timestamps are more than 15 seconds in the future
+\cite{go-ethereum-15-sek-limit}. Hence when the proof of work consensus
 mechanism was used it was possible for the miner to tamper with the timestamp
-and change it up to plus 15 seconds. This client behaviour let to the
-"15-second Rule", which is a security recommendation that recommends that the
-usage of the block timestamp is safe if the time dependent event can vary by up
-to 15 seconds.
+and change it up to plus 15 seconds. This behaviour let to the "15-second
+Rule"\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
+which is a security best practice which recommends that the usage of the block
+timestamp is safe if the time dependent event can vary by up to 15 seconds.
 
 \paragraph{Proof of stake}
-Proof of stake ethereum introduced slots, where each slot has a time frame of
+Proof of stake Ethereum introduced slots, where each slot has a time frame of
 12 seconds \cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}.
 For each slot one random validator is selected to propose a block, which other
 random validatores have vote about its validity. The specification defines
 how to calculate the timestamp at a specific slot with the function
 \textit{compute\_timestmap\_at\_slot} \cite{compute-timestamp-at-slot}. The
-timestamp is calculated with $genesis\_time + slots\_since\_genesis *
-SECONDS\_PER\_SLOT$. The function \textit{process\_execution\_payload} then
+timestamp is calculated with 
+
+$genesis\_time + slots\_since\_genesis *
+SECONDS\_PER\_SLOT$. 
+
+The function \textit{process\_execution\_payload} then
 checks if the blocks timestamp equals the calculated timestamp at that slot
 \cite{process-execution-payload}. Each slot and hence each block has
 a predetermined timestamp and is therefore impossible to tamper with but
-also much more easier to predict.
+also much more easier to predict. If the selected validator is offline the slot
+remains empty \cite{validator-offline}. 
 
 \subsection{Consequences}
 

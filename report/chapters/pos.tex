@@ -1,0 +1,57 @@
+\section{Proof-of-stake}
+
+Since the Merge on September 15, 2022 Ethereum uses a proof-of-stake (PoS)
+consensus protocol. In PoS Ethereum new blocks are proposed by validators,
+which then other randomly selected validators have to vote about its validity. 
+In order to run a validator 32 ETH have to be deposited in a deposit
+contract. Validators are incentivized to act honestly by threatening to destroy
+some or all of the staked ETH if they act dishonestly.
+
+Proof-of-stake Ethereum introduced slots and epoch. Each slot has a time frame
+of 12 seconds and an epoch lasts 32 slots
+\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. For each
+slot one random validator is selected to propose a new block to the network.
+When creating a new block validators have to follow the specification or blocks
+will get rejected.
+
+\subsection{Block Timestamp}
+
+The PoS Ethereum consensus specification defines how to calculate the timestamp
+at a specific slot with the function \textit{compute\_timestmap\_at\_slot}
+\cite{compute-timestamp-at-slot}. It calculates the timestamp with the following formula:
+
+\begin{equation}
+genesis\_time + slots\_since\_genesis *
+seconds\_per\_slot
+\end{equation}
+
+The Ethereum mainnet configuration sets the
+value of \textit{seconds\_per\_slot} to 12 seconds
+\cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}.
+
+
+Each validator calculates the block timestamp the same way and checks if
+timestamp in the block matches the calculated timestamp, if not the block will
+get rejected \cite{process-execution-payload}. Each slot and hence each block
+has a predetermined timestamp and is therefore impossible to tamper with but
+also much more easier to predict. If the selected validator to propose a new
+block is offline the slot remains empty \cite{validator-offline}. The following
+blocks timestamp has the timestamp of the following slot (i.e. a multiple of
+\textit{SECONDS\_PER\_SLOT}). In that case blocks will be 24 seconds apart. If
+the next proposed validator is also offline the block time will be 36 seconds
+apart etc.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1\textwidth]{../block\_time\_analysis/time\_difference\_bar.png}
+  \caption{Block times since the merge.}
+  \label{fig:block_time_analysis}
+\end{figure}
+
+Analysing blockchain data (see Figure \ref{fig:block_time_analysis}) after the
+merge (block number $> 15537393$) shows that 99.05 \% of all blocks have a
+block time of 12 seconds.
+
+
+\subsection{Block Time under Pow-Ethereum vs Pos-Ethereum}
+\subsection{Block Time}
