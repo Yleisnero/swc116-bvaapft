@@ -1,38 +1,58 @@
+\section{Introduction}
 
-\section{Block Time}
+Smart contracts often utilize time values to trigger specific actions. The
+values that can be employed for this purpose include the block timestamp and
+the block number. However, under the Proof of Work (PoW) consensus mechanism in
+Ethereum, using these values has been associated with various security issues
+\cite{swc116} \cite{Conkas2021} \cite{DASP2018} \cite{Osiris2018}
+\cite{Oyente2016}.
 
-The block time is the time difference between two subsequent blocks i.e.
-current block timestamp - parent block timestamp.
 
-\subsection{Block Time under Proof-of-Work}
+Since the transition to the Proof of Stake (PoS) consensus mechanism in
+Ethereum, significant changes have occurred in how the timestamp value has to
+be set and in the stability of the block time. This paper aims to discuss these
+changes.
 
-\subsubsection{Proof-of-Work}
+%The block time is defined as the time difference between two consecutive blocks, calculated as the current block timestamp minus the timestamp of the parent block.
 
-In PoW based systems use an difficutly adjustment algorithm to determine the
-block time. If the block time was too small ($<10s$) the difficulty got
-increased, and if the block time was too high ($>20s$) the difficulty got
-decreased \cite{eip-2}. Hence the block time could vary from block to block.
+\section{Block Time under Proof-of-Work}
 
-\subsubsection{Block Time}
+\subsection{Proof-of-Work}
 
-Furthermore the only restriction which miners had to follow when setting the 
-block timestamp value was the yellow paper. Which defined that the that
-the timestamp of the new block has to be greater than the timestamp of the
-parent block \cite{ethyellowpaper2023}. Hence miners could gain an unfair
-advantage by maniupulating the timestamp of their mined block (todo add
-references).
+In PoW-based systems, a difficulty adjustment algorithm is employed to
+determine the block time. If the block time was too short (less than 10
+seconds), the difficulty level increased, and if the block time was too long
+(greater than 20 seconds), the difficulty level decreased \cite{eip-2}.
 
-In order to prevent miners from setting the value too far into the future some
-of the most used Ethereum implementations like Geth (go-ethereum) rejected
-blocks which timestamps are more than 15 seconds in the future
-\cite{go-ethereum-15-sek-limit}. 
+\subsection{Block Time}
 
-Hence when the PoW consensus mechanism was used it was possible for the miner
-to tamper with the timestamp and change it up to plus 15 seconds. This
-behaviour let to the "15-second
-Rule"\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
-which is a security best practice which recommends that the usage of the block
-timestamp is safe if the time dependent event can vary by up to 15 seconds.
+As a result of the difficulty adjustment algorithm, the block time had the
+potential to vary from one block to another. Furthermore, the only restriction
+miners had to follow when setting the block timestamp value was outlined in the
+yellow paper, which stipulated that the timestamp of the new block must be
+greater than the timestamp of the parent block \cite{ethyellowpaper2023}.
+Consequently, miners could gain an unfair advantage by manipulating the
+timestamp of their mined block (references to be added).
+
+%As a result of the difficulty adjustment algorithm, the block time had the potential to vary from one block to another.
+%
+%Furthermore the only restriction which miners had to follow when setting the 
+%block timestamp value was the yellow paper. Which defined that the that
+%the timestamp of the new block has to be greater than the timestamp of the
+%parent block \cite{ethyellowpaper2023}. Hence miners could gain an unfair
+%advantage by maniupulating the timestamp of their mined block (todo add
+%references).
+
+To prevent miners from setting the timestamp too far into the future, some of the most widely used Ethereum implementations, such as Geth (go-ethereum), implemented a rejection mechanism for blocks with timestamps exceeding 15 seconds into the future \cite{go-ethereum-15-sek-limit}.
+
+Hence, when the PoW consensus mechanism was in use, miners had the ability to
+manipulate the timestamp and adjust it by up to 15 seconds. This behavior led
+to the establishment of the "15-second Rule"
+\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
+as a security best practice. The
+rule suggests that the usage of the block timestamp is considered
+safe if the time-dependent event can tolerate a variation of up to 15 seconds. 
+
 
 
 
@@ -47,54 +67,66 @@ timestamp is safe if the time dependent event can vary by up to 15 seconds.
 %means that block times in PoW can vary quite much and are only 14 seconds in
 %average.
 
-\subsection{Block Time under Proof-of-Stake}
+\section{Block Time under Proof-of-Stake}
 
-\subsubsection{Proof-of-Stake}
+\subsection{Proof-of-Stake}
 
-Since the Merge on September 15, 2022 Ethereum uses a proof-of-stake (PoS)
-consensus protocol. In PoS Ethereum new blocks are proposed by validators,
-which then other randomly selected validators have to vote about its validity. 
-In order to run a validator 32 ETH have to be deposited in a deposit
-contract. Validators are incentivized to act honestly by threatening to destroy
-some or all of the staked ETH if they act dishonestly.
+Since "The Merge" on September 15, 2022, Ethereum has transitioned to a
+Proof-of-Stake (PoS) consensus protocol. In PoS Ethereum, new blocks are
+proposed by validators, and then randomly selected validators must vote on the
+validity of these proposed blocks. To become a validator, a deposit of 32 ETH
+is required, stored in a deposit contract. Validators are incentivized to act
+honestly as they risk losing a portion or all of their staked ETH if they
+behave dishonestly.
 
-Proof-of-stake Ethereum introduced slots and epoch. Each slot has a time frame
-of 12 seconds and an epoch lasts 32 slots
-\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. For each
-slot one random validator is selected to propose a new block to the network.
-When creating a new block validators have to follow the specification or blocks
-will get rejected.
+Proof-of-stake Ethereum introduced the concepts of slots and epochs. Each slot
+has a time frame of 12 seconds, and an epoch spans 32 slots
+\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. In each
+slot, one validator is randomly chosen to propose a new block to the network.
+Validators are required to adhere to the protocol's specifications when
+creating new blocks; otherwise, their blocks will be rejected.
 
+\subsection{Block time}
 
-\subsubsection{Block time}
-
-The PoS Ethereum consensus specification defines how to calculate the timestamp
-at a specific slot with the function \textit{compute\_timestmap\_at\_slot}
-\cite{compute-timestamp-at-slot}. It calculates the timestamp with the
-following formula:
+The PoS Ethereum consensus specification provides instructions on how to
+calculate the timestamp at a specific slot using the
+\textit{compute\_timestamp\_at\_slot} function \cite{compute-timestamp-at-slot}.
+This calculation is based on the following formula:
 
 \begin{equation}
 genesis\_time + slots\_since\_genesis *
 seconds\_per\_slot
 \end{equation}
 
-The Ethereum mainnet configuration sets the
-value of \textit{seconds\_per\_slot} to 12 seconds
-\cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}. The mainet
-beacon chains value for \textit{genesis\_time} is $1606824023$, which is the
-timestamp when the the original PoS beachone chain was launched on December 01
-2020.
 
-Each validator calculates the block timestamp the same way and checks if
-timestamp in the block matches the calculated timestamp, if not the block will
-get rejected \cite{process-execution-payload}. Each slot and hence each block
-has a predetermined timestamp and is therefore impossible to tamper with but
-also much more easier to predict. If the selected validator to propose a new
-block is offline the slot remains empty \cite{validator-offline}. The following
-blocks timestamp has the timestamp of the following slot (i.e. a multiple of
-\textit{SECONDS\_PER\_SLOT}). In that case blocks will be 24 seconds apart. If
-the next proposed validator is also offline the block time will be 36 seconds
-apart etc.
+In the Ethereum mainnet configuration, the value of \textit{seconds\_per\_slot} is set to
+12 seconds \cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}.
+The mainnet beacon chain's value for \textit{genesis\_time} is $1606824023$, which
+corresponds to the timestamp when the original PoS beacon chain was launched on
+December 1, 2020.
+
+Each validator calculates the block timestamp in the same way and verifies if
+the timestamp in the block matches the calculated timestamp. If there is a
+mismatch, the block is rejected \cite{process-execution-payload}. Since each
+slot, and consequently each block, has a predetermined timestamp, it is
+virtually impossible to tamper with, but it also becomes more predictable. In
+the event that the selected validator, responsible for proposing a new block,
+is offline, the slot remains empty \cite{validator-offline}. The timestamp of
+the following block aligns with the timestamp of the following slot, which is a
+multiple of \textit{SECONDS\_PER\_SLOT}. As a result, blocks are 24 seconds
+apart. If subsequent validators are also offline, the block times will be 36
+seconds apart, and so on.
+
+%Each validator calculates the block timestamp the same way and checks if
+%timestamp in the block matches the calculated timestamp, if not the block will
+%get rejected \cite{process-execution-payload}. Each slot and hence each block
+%has a predetermined timestamp and is therefore impossible to tamper with but
+%also much more easier to predict. If the selected validator to propose a new
+%block is offline the slot remains empty \cite{validator-offline}. The following
+%blocks timestamp has the timestamp of the following slot (i.e. a multiple of
+%\textit{SECONDS\_PER\_SLOT}). In that case blocks will be 24 seconds apart. If
+%the next proposed validator is also offline the block time will be 36 seconds
+%apart etc.
 
 \begin{figure}[H]
   \centering
@@ -103,10 +135,10 @@ apart etc.
   \label{fig:block_time_analysis}
 \end{figure}
 
-Analysing blockchain data (see Figure \ref{fig:block_time_analysis}) after the
-merge (block number $> 15537393$) shows that 99.05 \% of all blocks have a
+Analysing blockchain data (refer to Figure \ref{fig:block_time_analysis}) following the
+merge (block number $> 15537393$) shows that 99.05 \% of all blocks exhibit a
 block time of 12 seconds.
 
 
 \section{Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
-\subsection{Block Time}
+\section{Best Practices (Do}
