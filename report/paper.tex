@@ -2,6 +2,7 @@
 \usepackage{solidity}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 
 
 \title{Block values as a proxy for time}
@@ -14,20 +15,27 @@
 \newpage
 
 \section{Introduction}
-This paper focuses on a weakness found in Solidity smart contracts, known as 
-"block values as a proxy for time". The weakness comes from the attempt of
-developers to introduce time depended functionality in their smart contracts,
-by using the block values \textit{timestamp} and \textit{number}.
+% This paper focuses on a weakness found in Solidity smart contracts, known as 
+% "block values as a proxy for time". The weakness comes from the attempt of
+% developers to introduce time depended functionality in their smart contracts,
+% by using the block values \textit{timestamp} and \textit{number}.
+
+Smart contracts often use time values to trigger some kind of action
+\cite{swc116}. Values which can be used for that are the block timestamp and
+the block number. Under PoW Ethereum using these values lead to multiple
+security issues \cite{swc116} \cite{Conkas2021} \cite{DASP2018}
+\cite{Osiris2018} \cite{Oyente2016}. Since PoS Ethereum the rules changes, this
+paper will present these changes.
+
 
 \input{chapters/pos}
-\input{chapters/block_timestamp}
-\newpage
-\input{chapters/block_number}
+%\input{chapters/block_number}
 % \input{chapters/block_time_chart}
 %\input{chapters/vulnerable_contracts}
 %\input{chapters/code_properties}
 %\input{chapters/exploits}
 \input{chapters/use-cases}
+%\input{chapters/block_timestamp}
 
 \newpage
 \bibliography{seminar}

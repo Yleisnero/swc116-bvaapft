@@ -1,4 +1,55 @@
-\section{Proof-of-stake}
+
+\section{Block Time}
+
+The block time is the time difference between two subsequent blocks i.e.
+current block timestamp - parent block timestamp.
+
+\subsection{Block Time under Proof-of-Work}
+
+\subsubsection{Proof-of-Work}
+
+In PoW based systems use an difficutly adjustment algorithm to determine the
+block time. If the block time was too small ($<10s$) the difficulty got
+increased, and if the block time was too high ($>20s$) the difficulty got
+decreased \cite{eip-2}. Hence the block time could vary from block to block.
+
+\subsubsection{Block Time}
+
+Furthermore the only restriction which miners had to follow when setting the 
+block timestamp value was the yellow paper. Which defined that the that
+the timestamp of the new block has to be greater than the timestamp of the
+parent block \cite{ethyellowpaper2023}. Hence miners could gain an unfair
+advantage by maniupulating the timestamp of their mined block (todo add
+references).
+
+In order to prevent miners from setting the value too far into the future some
+of the most used Ethereum implementations like Geth (go-ethereum) rejected
+blocks which timestamps are more than 15 seconds in the future
+\cite{go-ethereum-15-sek-limit}. 
+
+Hence when the PoW consensus mechanism was used it was possible for the miner
+to tamper with the timestamp and change it up to plus 15 seconds. This
+behaviour let to the "15-second
+Rule"\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
+which is a security best practice which recommends that the usage of the block
+timestamp is safe if the time dependent event can vary by up to 15 seconds.
+
+
+
+%The mining difficulty in those systems can
+%vary and therefore the block time can also vary \cite{eth_blocks}. 
+%
+%Block times in PoW depended on how long a miner needed to brute-force a hash.
+%It is possible to determine how long it takes to guess the right hash in
+%average. But the actual time can vary. Also this hash had a certain difficulty
+%which influences how long it takes to guess it correctly. This difficulty
+%changed because of forks and because of the difficulty bomb. In conclusion this
+%means that block times in PoW can vary quite much and are only 14 seconds in
+%average.
+
+\subsection{Block Time under Proof-of-Stake}
+
+\subsubsection{Proof-of-Stake}
 
 Since the Merge on September 15, 2022 Ethereum uses a proof-of-stake (PoS)
 consensus protocol. In PoS Ethereum new blocks are proposed by validators,
@@ -14,11 +65,13 @@ slot one random validator is selected to propose a new block to the network.
 When creating a new block validators have to follow the specification or blocks
 will get rejected.
 
-\subsection{Block Timestamp}
+
+\subsubsection{Block time}
 
 The PoS Ethereum consensus specification defines how to calculate the timestamp
 at a specific slot with the function \textit{compute\_timestmap\_at\_slot}
-\cite{compute-timestamp-at-slot}. It calculates the timestamp with the following formula:
+\cite{compute-timestamp-at-slot}. It calculates the timestamp with the
+following formula:
 
 \begin{equation}
 genesis\_time + slots\_since\_genesis *
@@ -27,8 +80,10 @@ seconds\_per\_slot
 
 The Ethereum mainnet configuration sets the
 value of \textit{seconds\_per\_slot} to 12 seconds
-\cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}.
-
+\cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}. The mainet
+beacon chains value for \textit{genesis\_time} is $1606824023$, which is the
+timestamp when the the original PoS beachone chain was launched on December 01
+2020.
 
 Each validator calculates the block timestamp the same way and checks if
 timestamp in the block matches the calculated timestamp, if not the block will
@@ -41,7 +96,7 @@ blocks timestamp has the timestamp of the following slot (i.e. a multiple of
 the next proposed validator is also offline the block time will be 36 seconds
 apart etc.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \includegraphics[width=1\textwidth]{../block\_time\_analysis/time\_difference\_bar.png}
   \caption{Block times since the merge.}
@@ -53,5 +108,5 @@ merge (block number $> 15537393$) shows that 99.05 \% of all blocks have a
 block time of 12 seconds.
 
 
-\subsection{Block Time under Pow-Ethereum vs Pos-Ethereum}
+\section{Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
 \subsection{Block Time}
