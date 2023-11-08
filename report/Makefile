@@ -12,5 +12,5 @@ figures:
 	cd block_time_analysis; source venv/bin/activate; python plot_pre_merge.py
  
 clean:
-	rubber --clean $(PAPER)
+	rubber --clean $(paper_tex)
 
