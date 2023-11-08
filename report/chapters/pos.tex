@@ -15,16 +15,16 @@ changes.
 
 %The block time is defined as the time difference between two consecutive blocks, calculated as the current block timestamp minus the timestamp of the parent block.
 
-\section{Block Time under Proof-of-Work}
+\section{Proof-of-Work}
 
-\subsection{Proof-of-Work}
+\subsection{Block Time}
 
 In PoW-based systems, a difficulty adjustment algorithm is employed to
 determine the block time. If the block time was too short (less than 10
 seconds), the difficulty level increased, and if the block time was too long
 (greater than 20 seconds), the difficulty level decreased \cite{eip-2}.
 
-\subsection{Block Time}
+\subsection{Block Timestamp}
 
 As a result of the difficulty adjustment algorithm, the block time had the
 potential to vary from one block to another. Furthermore, the only restriction
@@ -55,6 +55,7 @@ safe if the time-dependent event can tolerate a variation of up to 15 seconds.
 
 
 
+\subsection{Block Number}
 
 %The mining difficulty in those systems can
 %vary and therefore the block time can also vary \cite{eth_blocks}. 
@@ -67,9 +68,9 @@ safe if the time-dependent event can tolerate a variation of up to 15 seconds.
 %means that block times in PoW can vary quite much and are only 14 seconds in
 %average.
 
-\section{Block Time under Proof-of-Stake}
+\section{Proof-of-Stake}
 
-\subsection{Proof-of-Stake}
+\subsection{Block Time}
 
 Since "The Merge" on September 15, 2022, Ethereum has transitioned to a
 Proof-of-Stake (PoS) consensus protocol. In PoS Ethereum, new blocks are
@@ -86,7 +87,7 @@ slot, one validator is randomly chosen to propose a new block to the network.
 Validators are required to adhere to the protocol's specifications when
 creating new blocks; otherwise, their blocks will be rejected.
 
-\subsection{Block time}
+\subsection{Block Timestamp}
 
 The PoS Ethereum consensus specification provides instructions on how to
 calculate the timestamp at a specific slot using the
@@ -130,7 +131,7 @@ seconds apart, and so on.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1\textwidth]{../block\_time\_analysis/time\_difference\_bar.png}
+  \includegraphics[width=1\textwidth]{../block_time_analysis/time_difference_bar.png}
   \caption{Block times since the merge.}
   \label{fig:block_time_analysis}
 \end{figure}
@@ -139,6 +140,9 @@ Analysing blockchain data (refer to Figure \ref{fig:block_time_analysis}) follow
 merge (block number $> 15537393$) shows that 99.05 \% of all blocks exhibit a
 block time of 12 seconds.
 
+\subsection{Block Number}
 
-\section{Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
-\section{Best Practices (Do}
+
+\section{Conclusion: Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
+\section{Best Practices (Dos and Donts)}
+
