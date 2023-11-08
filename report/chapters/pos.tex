@@ -53,9 +53,24 @@ as a security best practice. The
 rule suggests that the usage of the block timestamp is considered
 safe if the time-dependent event can tolerate a variation of up to 15 seconds. 
 
-
-
 \subsection{Block Number}
+The yellow paper of Ethereum states that each block has
+an integer value as a block number. The block number
+of a specific block must be exactly one unit higher than the block
+number of the previous block \cite{ethyellowpaper2023}.
+Smart contract developers attempted to utilize the block number to calculate
+the current time, operating under the assumption that the time interval between
+two blocks always remains constant at fourteen seconds. Theoretically, one could
+calculate the current time by dividing the block number by fourteen.
+However, this approach proves impractical in reality due to the variable
+intervals between blocks, as explained earlier. Moreover, these block intervals
+can change unexpectedly, for instance, when the difficulty bomb was introduced
+or during a chain fork \cite{swc116}.
+As a result the block number should not be used as a proxy for time.
+An example for this misusage can be seen in the Listing \ref{lst:number_weakness}.
+There the block number is used to lock a function of a contract for a specific time.
+
+\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/bad-blocknumber.sol}
 
 %The mining difficulty in those systems can
 %vary and therefore the block time can also vary \cite{eth_blocks}. 
