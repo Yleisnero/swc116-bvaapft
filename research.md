@@ -41,3 +41,9 @@ networks" (source beacon-chain.md)
 # Geth is not a consensus client for proof-of-stake`:
 
 https://geth.ethereum.org/docs/fundamentals/peer-to-peer
+
+# Genesis Time
+
+https://eth2book.info/capella/part3/containers/state/
+
+1606824023
