@@ -1,2 +1,13 @@
 \section{Use-cases}
 
+\subsection{Timelocks}
+A timelock is a smart contract that serves as a mechanism to delay function calls form another contract for
+a predefined amount of time. Timelocks find their primary application in governance systems,
+where they play a crucial role in implementing delayed administrative actions.
+Their presence often signifies the credibility of a project and underscores the commitment of its owners
+to its long-term success. \cite{timelock2021}.
+
+Openzeppelin provides such a timelock in their library (@openzeppelin/contracts/governance/TimelockController.sol).
+A part of this timelock code can be seen in Listing \ref{lst:timelock} \cite{timelock_code}.
+
+\lstinputlisting[language=Solidity, caption={Openzeppelin Timelock}, label={lst:timelock}]{../dev/contracts/timelock.sol}
