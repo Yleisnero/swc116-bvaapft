@@ -58,7 +58,8 @@ number of the previous block \cite{ethyellowpaper2023}.
 Smart contract developers attempted to utilize the block number to calculate
 the current time, operating under the assumption that the time interval between
 two blocks always remains constant at fourteen seconds. Theoretically, one could
-calculate the current time by dividing the block number by fourteen.
+calculate time differences between blocks by multiplying the block numbers by fourteen 
+and subtracting them from each other.
 However, this approach proves impractical in reality due to the variable
 intervals between blocks, as explained earlier. Moreover, these block intervals
 can change unexpectedly, for instance, when the difficulty bomb was introduced
@@ -126,16 +127,38 @@ seconds apart, and so on.
   \label{fig:block_time_analysis}
 \end{figure}
 
-Analysing blockchain data (refer to Figure \ref{fig:block_time_analysis}) following the
+Analyzing blockchain data (refer to Figure \ref{fig:block_time_analysis}) following the
 merge (block number $> 15537393$) shows that 99.05 \% of all blocks exhibit a
 block time of 12 seconds.
 
 \subsection{Block Number}
+In PoS, just like in PoW, the block number increases by one with each new block.
+In PoS, the block intervals are consistently set at 12 seconds.
+Consequently, it might appear that using the block number as a time proxy in PoS is a viable option. 
+However, it's not advisable, because validators go offline from time to time.
+This causes the block time to increase and therefore leads to an inaccuracy of the calculation
+of time based on the block number.
 
 \section{Conclusion: Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
-In conclusion the block values where not safe to use as a proxy for time in 
-Proof of Work based Ethereum. Since the change of Ethereum to Proof of Stake this is not the case any more.
-Our researched showed that the block time is now constant and therefore safe to use as a proxy for time.
+In PoW-based Ethereum, block times were probabilistic and influenced by mining difficulty.
+As a result, using block values as a time proxy in PoW was not secure.
+However, since Ethereum's transition to PoS, this is no longer the case.
+PoS-based Ethereum has fixed block times of 12 seconds or multiples thereof.
+Our research has shown that block times can no longer be influenced from external sources.
+Therefore, using the block.timestamp value as a time proxy is now safe in PoS.
+
+Using the block.number as a proxy for time is still not advisable. Block times 
+can become a multiple of 12s and it is also not guaranteed that the block intervals will
+never change again in the future.
 
 \section{Best Practices (Dos and Donts)}
 
+\begin{center}
+  \begin{tabular}{ c c c }
+   \hline
+   & block.number & block.timestamp \\ [0.5ex] 
+  \hline
+   PoW & DONT & DONT \\ 
+   PoS & DONT & DO \\  
+  \end{tabular}
+  \end{center}
