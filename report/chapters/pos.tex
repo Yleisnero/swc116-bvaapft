@@ -31,7 +31,7 @@ environmentally friendly alternative.
 
 \section{Block Time in Ethereum}
 
-\subsection{Proof-of-Work block time}
+\subsection{Proof-of-Work Block Time}
 
 In Ethereum's Proof-of-Work (PoW) system, the block time — the average time
 interval between blocks — is primarily governed by a difficulty adjustment
@@ -65,21 +65,27 @@ approximately 13.4 seconds.
   \label{fig:block_time_analysis_pow}
 \end{figure}
 
-\subsection{Proof-of-Stake block time}
-Since "The Merge" on September 15, 2022, Ethereum has transitioned to a
-Proof-of-Stake (PoS) consensus protocol. In PoS Ethereum, new blocks are
-proposed by validators, and then randomly selected validators must vote on the
-validity of these proposed blocks. To become a validator, a deposit of 32 ETH
-is required, stored in a deposit contract. Validators are incentivized to act
-honestly as they risk losing a portion or all of their staked ETH if they
-behave dishonestly.
+\subsection{Proof-of-Stake Block Time}
+Following "The Merge" on September 15, 2022, Ethereum has shifted to a
+Proof-of-Stake (PoS) consensus mechanism. Under PoS, validators propose new
+blocks, with a selection process involving other validators who vote to confirm
+these blocks' authenticity. A stake of 32 ETH is required to be locked in as a
+deposit for one to become a validator. This staking mechanism ensures validator
+honesty, as any malpractice could lead to the loss of their staked ETH.
 
-Proof-of-stake Ethereum introduced the concepts of slots and epochs. Each slot
-has a time frame of 12 seconds, and an epoch spans 32 slots
-\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. In each
-slot, one validator is randomly chosen to propose a new block to the network.
-Validators are required to adhere to the protocol's specifications when
-creating new blocks; otherwise, their blocks will be rejected.
+The PoS system is organized around slots and epochs, with slots being 12-second
+intervals and an epoch consisting of 32 such slots
+\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. A validator
+is chosen by
+the protocol's algorithm to propose a block in each slot, and failure to comply
+with the protocol's rules in block creation can result in their block being
+dismissed. This structure introduces a more predictable and systematic approach
+to block creation compared to PoW
+
+An examination of the blockchain data since the implementation of the Merge
+(starting at block number 15537393) reveals that 99.05\% of all blocks have been
+consistent with a block time of 12 seconds, as indicated by the data in Figure
+\ref{fig:block_time_analysis}.
 
 \begin{figure}[H]
   \centering
@@ -140,9 +146,6 @@ multiple of \textit{SECONDS\_PER\_SLOT}. As a result, blocks are 24 seconds
 apart. If subsequent validators are also offline, the block times will be 36
 seconds apart, and so on.
 
-Analyzing blockchain data (refer to Figure \ref{fig:block_time_analysis}) following the
-merge (block number $> 15537393$) shows that 99.05 \% of all blocks exhibit a
-block time of 12 seconds.
 
 \section{Block number in Ethereum}
 \subsection{Proof-of-Work Block Number}
