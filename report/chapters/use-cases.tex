@@ -36,4 +36,11 @@ modifier timedTransitions() {
 - Avoid using block.timestamp in PoW, because it can be manipulated by miners \\
 - Avoid using block.timestamp in PoS for triggering events with an exact time (more accurate than 12 seconds, e.g. silvester) \\
 - It is safe to use block.timestamp in PoS, if the time-dependent event must only be higher than a certain timestamp (e.g. timelocks) \\
-- Never use block.timestamp in a comparison (do not do: e.g. block.timestamp == 1702446773), instead use > or >=
+- Never use block.timestamp in a comparison (do not do: e.g. block.timestamp == 1702446773), instead use $>$ or $>=$
+
+\section{Example contracts}
+- Firework.sol (timestamp based) - both bad \\
+- FastWithdrawChallenge.sol (timestamp based) - PoW bad, PoS ok (not considering other weaknesses) \\
+- BlockNumberTimeLock.sol (block number as a proxy for time) - both bad \\
+- BlockNumberLock.sol (block number only) - both good if the block count is more relevant than the exact time
+(the approximate duration until unlock is more precise under PoS then under PoW) \\

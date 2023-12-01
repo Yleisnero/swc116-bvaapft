@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.21;
 
-contract TimeLock {
+contract BlockNumberTimeLock {
   uint unlockBlock;
   bool locked = true;
   uint constant SECONDS_PER_SLOT = 14;

@@ -1,12 +1,13 @@
-contract Game {
+// Locking contract for a certain number of blocks
+contract BlockNumberLock {
     uint startingBlock;
 
     constructor() public {
-        // Allowed to play afer 10 blocks
+        // Allowed to play after 10 blocks
         startingBlock = block.number + 10;
     }
 
-    function play() public {
+    function run() public {
         require(block.number >= startingBlock);
     }
 }

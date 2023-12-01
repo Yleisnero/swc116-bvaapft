@@ -121,7 +121,7 @@ to the establishment of the "15-second Rule"
 \footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
 as a security best practice. The
 rule suggests that the usage of the block timestamp is considered
-safe if the time-dependent event can tolerate a variation of up to 15 seconds. 
+safe if the time-dependent event can tolerate a variation of up to 15 seconds.
 
 \subsection{Proof-of-Stake Block Timestamp}
 
@@ -164,10 +164,10 @@ intervals between blocks, as explained earlier. Moreover, these block intervals
 can change unexpectedly, for instance, when the difficulty bomb was introduced
 or during a chain fork \cite{swc116}.
 As a result the block number should not be used as a proxy for time.
-An example for this misusage can be seen in the Listing \ref{lst:number_weakness}.
-There the block number is used to lock a function of a contract for a specific time.
+%An example for this misusage can be seen in the Listing \ref{lst:number_weakness}.
+%There the block number is used to lock a function of a contract for a specific time.
 
-\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/bad-blocknumber.sol}
+%\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/blocknumbertimelock.sol}
 
 \subsection{Proof-of-Stake Block Number}
 In PoS, just like in PoW, the block number increases by one with each new block.
@@ -176,7 +176,8 @@ Consequently, it might appear that using the block number as a time proxy in PoS
 However, it's not advisable, because validators go offline from time to time.
 This causes the block time to increase and therefore leads to an inaccuracy of the calculation
 of time based on the block number. \\
-A contract initially deployed under PoW (like the one in Listing \ref{lst:number_weakness}) would
+% (like the one in Listing \ref{lst:number_weakness})
+A contract initially deployed under PoW would
 become impractical or malfunction in a PoS environment due to the inherent differences in the block times.
 
 \section{Conclusion: Block Time under PoW vs. PoS}
