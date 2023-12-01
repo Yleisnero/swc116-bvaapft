@@ -13,5 +13,18 @@ A part of this timelock code can be seen in Listing \ref{lst:timelock} \cite{tim
 \lstinputlisting[language=Solidity, caption={Openzeppelin Timelock}, label={lst:timelock}]{../dev/contracts/timelock.sol}
 
 \subsection{staged contracts}
+%\url{https://fravoll.github.io/solidity-patterns/state_machine.html}
 TODO: What is a staged contract
 der Ablauf in Phasen unterteilt ist, zwischen denen zu bestimmten Zeiten umgeschaltet wird.
+
+\begin{solidity}
+modifier timedTransitions() {
+    if (stage == Stages.AcceptingBlindBids && now >= creationTime + 6 days) {
+        nextStage();
+    }
+    if (stage == Stages.RevealBids && now >= creationTime + 10 days) {
+        nextStage();
+    }
+    _;
+}
+\end{solidity}
