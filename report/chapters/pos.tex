@@ -32,10 +32,31 @@ environmentally friendly alternative.
 \section{Block Time in Ethereum}
 
 \subsection{Proof-of-Work block time}
-In PoW-based systems, a difficulty adjustment algorithm is employed to
-determine the block time. If the block time was too short (less than 10
-seconds), the difficulty level increased, and if the block time was too long
-(greater than 20 seconds), the difficulty level decreased \cite{eip-2}.
+
+In Ethereum's Proof-of-Work (PoW) system, the block time — the average time
+interval between blocks — is primarily governed by a difficulty adjustment
+algorithm. This algorithm dynamically alters the computational difficulty of
+mining a block, striving to keep the block time within a targeted range.
+According to Ethereum Improvement Proposal 2 (EIP-2), the algorithm adjusts
+difficulty levels based on observed block times \cite{eip-2}:
+
+\begin{itemize}
+  \item If the block time falls short of the ideal duration (less
+    than 10 seconds), the difficulty is increased. This escalation in
+    difficulty slows down the rate at which new blocks are mined,
+    counteracting the tendency towards overly rapid block generation.
+
+  \item Conversely, if the block time stretches beyond the desired limit (exceeding
+    20 seconds), the difficulty is decreased. This reduction makes it easier to
+    mine new blocks, compensating for excessively lengthy block intervals.
+\end{itemize}
+
+
+The following pie chart provides a graphical depiction of Ethereum's block time
+distribution under the Proof of Work (PoW) mechanism for the year 2021,
+highlighting significant fluctuations, with an average block time of
+approximately 13.4 seconds.
+
 
 \begin{figure}[H]
   \centering
@@ -153,7 +174,7 @@ This causes the block time to increase and therefore leads to an inaccuracy of t
 of time based on the block number.
 
 
-\section{Conclusion: Block Time under PoW vs. PoS Ethereum}
+\section{Conclusion: Block Time under PoW vs. PoS}
 In PoW-based Ethereum, block times were probabilistic and influenced by mining difficulty.
 As a result, using block values as a time proxy in PoW was not secure.
 However, since Ethereum's transition to PoS, this is no longer the case.
