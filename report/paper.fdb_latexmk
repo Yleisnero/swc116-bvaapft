@@ -1,18 +1,20 @@
 # Fdb version 4
-["bibtex paper"] 0 "paper.aux" "paper.bbl" "paper" 0 -1
+["bibtex paper"] 1701439850 "paper.aux" "paper.bbl" "paper" 1701439852 0
   "./IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "./seminar.bib" 1699527177 8551 4f1660f8fb4aeca4f75eaf8433bb195d ""
-  "paper.aux" 1701430846 4282 6cdecad5a4ed5b1d255771714bd64a8f "pdflatex"
+  "./seminar.bib" 1701439659 9542 c366f65e6389de8851191db0fa57cac0 ""
+  "paper.aux" 1701439852 4777 5ce60b05fc91267ae50a7fa8eb1d5945 "pdflatex"
   (generated)
   "paper.bbl"
   "paper.blg"
   (rewritten before read)
-["pdflatex"] 1701430845 "/home/jonas/Repositories/SC-Seminar/swc116-bvaapft/report/paper.tex" "paper.pdf" "paper" 1701430846 2
+["pdflatex"] 1701439850 "/home/jonas/Repositories/SC-Seminar/swc116-bvaapft/report/paper.tex" "paper.pdf" "paper" 1701439852 0
   "../dev/contracts/bad-blocknumber.sol" 1699457093 392 00efcd80948ef98e01dfbdb7588db701 ""
   "../dev/contracts/timelock.sol" 1699527177 416 9e09e21a58e77fcbd0d0a9595f117c38 ""
   "/home/jonas/.texlive2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1697193569 1345262 458be6162e9afca38c212e76169f887c ""
   "/home/jonas/Repositories/SC-Seminar/swc116-bvaapft/report/paper.tex" 1699433260 1323 c1aebe51ea59805360064033baf857ef ""
+  "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -30,7 +32,6 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1248133631 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1248133631 32080 340ef9bf63678554ee606688e7b5339d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
-  "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb" 1248133631 36281 c355509802a035cadc5f15869451dcee ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
@@ -39,6 +40,7 @@
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1248133631 37944 359e864bd06cde3b1cf57bb20757fb06 ""
   "/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb" 1248133631 24287 6b803fa9eb1ddff9112e00519b09dd9e ""
+  "/usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb" 1215737283 138258 6525c253f16cededa14c7fd0da7f67b2 ""
   "/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1685109884 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/share/texlive/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty" 1576625341 40635 c40361e206be584d448876bba8a64a3b ""
@@ -91,12 +93,13 @@
   "/usr/share/texlive/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1698160365 5129912 224731adee7d9f5b2de888652edcd522 ""
   "block_time_analysis/pos_block_time_bar_chart.png" 1699527177 95116 74cca23ad2401838b4c71dd3d12cf8d1 ""
   "block_time_analysis/pow_block_time_pie_chart.png" 1699527177 143468 64f6bca64bcaf4742d0d0a497b8d62b4 ""
-  "chapters/pos.tex" 1701430516 8275 9bf042f9ce803609d422aeb323bf2bfe ""
-  "chapters/use-cases.tex" 1701430843 1301 f7f914f0b7d2c417aacbc68fdce23e7d ""
-  "paper.aux" 1701430846 4282 6cdecad5a4ed5b1d255771714bd64a8f "pdflatex"
-  "paper.bbl" 1701430835 4639 13a320c34958849b29e5ed6167afcae5 "bibtex paper"
-  "paper.out" 1701430846 2014 2d280ba994e84f11c3fae3216d1d1e9f "pdflatex"
+  "chapters/pos.tex" 1701439847 10249 b3b04e476f55f0feff9eb742e339c7eb ""
+  "chapters/use-cases.tex" 1701437687 1529 69016ae07a051cb853c759cc17e27dd9 ""
+  "paper.aux" 1701439852 4777 5ce60b05fc91267ae50a7fa8eb1d5945 "pdflatex"
+  "paper.bbl" 1701439850 5486 9243bdb7a8b57c7dc1e0352ac0680977 "bibtex paper"
+  "paper.out" 1701439852 2593 71177ab7ec10c6cca1505247cc936b25 "pdflatex"
   "paper.tex" 1699433260 1323 c1aebe51ea59805360064033baf857ef ""
+  "paper.toc" 1701439852 1268 6eb088ec1af24db39a07b75d7033f3f6 "pdflatex"
   "solidity.sty" 1697191782 3482 336aadcc8947294af451e96bd0a3ee53 ""
   (generated)
   "paper.aux"

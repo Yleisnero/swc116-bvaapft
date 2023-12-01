@@ -7,3 +7,6 @@
 *.toc
 paper.rubbercache
 paper.pdf
+*.fls
+*.gz
+*.fdb_latexmk

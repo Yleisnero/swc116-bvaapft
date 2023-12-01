@@ -19,14 +19,14 @@ for its security and decentralization but also criticized for its high energy
 consumption and potential for centralization due to mining pools. PoW requires
 miners to solve complex computational problems to validate transactions and
 create new blocks, a process that consumes substantial computational power and
-energy.
+energy \cite{eth_pow}.
 
 In response to these concerns, Ethereum transitioned to the Proof of Stake
 (PoS) mechanism with "The Merge" on September 15, 2022. PoS, in contrast to
 PoW, selects validators to create new blocks based on the number of coins they
 hold and are willing to 'stake' as collateral. This approach significantly
 reduces the energy requirements and aims to offer a more scalable and
-environmentally friendly alternative.
+environmentally friendly alternative \cite{eth_merge}.
 
 
 \section{Block Time in Ethereum}
@@ -67,7 +67,7 @@ approximately 13.4 seconds.
 
 \subsection{Proof-of-Stake Block Time}
 Following "The Merge" on September 15, 2022, Ethereum has shifted to a
-Proof-of-Stake (PoS) consensus mechanism. Under PoS, validators propose new
+Proof-of-Stake (PoS) consensus mechanism \cite{eth_history}. Under PoS, validators propose new
 blocks, with a selection process involving other validators who vote to confirm
 these blocks' authenticity. A stake of 32 ETH is required to be locked in as a
 deposit for one to become a validator. This staking mechanism ensures validator
@@ -102,7 +102,7 @@ miners had to follow when setting the block timestamp value was outlined in the
 yellow paper, which stipulated that the timestamp of the new block must be
 greater than the timestamp of the parent block \cite{ethyellowpaper2023}.
 Consequently, miners could gain an unfair advantage by manipulating the
-timestamp of their mined block (references to be added).
+timestamp of their mined block \cite{swc116}.
 
 
 To prevent miners from setting the timestamp too far into the future, some of the most widely used Ethereum implementations, such as Geth (go-ethereum), implemented a rejection mechanism for blocks with timestamps exceeding 15 seconds into the future \cite{go-ethereum-15-sek-limit}.
@@ -174,7 +174,9 @@ In PoS, the block intervals are consistently set at 12 seconds.
 Consequently, it might appear that using the block number as a time proxy in PoS is a viable option. 
 However, it's not advisable, because validators go offline from time to time.
 This causes the block time to increase and therefore leads to an inaccuracy of the calculation
-of time based on the block number.
+of time based on the block number. \\
+A contract initially deployed under PoW (like the one in Listing \ref{lst:number_weakness}) would now under PoS
+be very inaccurate in its time calculation.
 
 
 \section{Conclusion: Block Time under PoW vs. PoS}
