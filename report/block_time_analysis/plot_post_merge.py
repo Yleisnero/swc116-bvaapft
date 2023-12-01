@@ -49,7 +49,10 @@ plt.yticks(fixed_y_ticks, [str(val) for val in fixed_y_ticks])
 # Adding percentages to each bar
 for bar, percentage in zip(bars, percentage_values):
     yval = bar.get_height()
-    plt.text(bar.get_x() + bar.get_width()/2, yval, f'{percentage:.2f}%', ha='center', va='bottom', fontsize=8, color='black')
+    p_val = f'{percentage:.3f}%'
+    if p_val == "0.000%":
+        continue
+    plt.text(bar.get_x() + bar.get_width()/2, yval, p_val , ha='center', va='bottom', fontsize=8, color='black')
 
 # Show the chart
 plt.savefig('pos_block_time_bar_chart_with_percentages.png', bbox_inches='tight', dpi=300)
