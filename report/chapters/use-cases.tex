@@ -12,10 +12,11 @@ A part of this timelock code can be seen in Listing \ref{lst:timelock} \cite{tim
 
 \lstinputlisting[language=Solidity, caption={Openzeppelin Timelock}, label={lst:timelock}]{../dev/contracts/timelock.sol}
 
-\subsection{staged contracts}
-%\url{https://fravoll.github.io/solidity-patterns/state_machine.html}
-TODO: What is a staged contract
-der Ablauf in Phasen unterteilt ist, zwischen denen zu bestimmten Zeiten umgeschaltet wird.
+\subsection{State Machine}
+Contracts often act as a state machine. It's common to have multi-stage
+processes where certain actions are allowed only during specific phases.
+Timestamps can be used to enforce time-based conditions within a contract \cite{soliditydocs_statemaschine}. \\
+The following example shows a contract that implements the transition of stages (states) based on timestamps \cite{stagedcontract_code}.
 
 \begin{solidity}
 modifier timedTransitions() {
