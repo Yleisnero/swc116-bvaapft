@@ -29,3 +29,10 @@ modifier timedTransitions() {
     _;
 }
 \end{solidity}
+
+\section{Best practices}
+- Avoid using block.number in PoW as a proxy for time, because it is not guaranteed that the block time is fixed at 14 seconds \\
+- Avoid using block.number in PoS as a proxy for time, because the block time can be a multiple of 12 seconds and may change in the future (instead use block.timestamp)\\
+- Avoid using block.timestamp in PoW, because it can be manipulated by miners \\
+- Avoid using block.timestamp in PoS for triggering events with an exact time (more accurate than 12 seconds, e.g. silvester) \\
+- It is safe to use block.timestamp in PoS, if the time-dependent event must only be higher than a certain timestamp (e.g. timelocks) \\
