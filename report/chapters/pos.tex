@@ -80,7 +80,14 @@ is chosen by
 the protocol's algorithm to propose a block in each slot, and failure to comply
 with the protocol's rules in block creation can result in their block being
 dismissed. This structure introduces a more predictable and systematic approach
-to block creation compared to PoW
+to block creation compared to PoW.
+
+In the event that the selected validator, responsible for proposing a new block,
+is offline, the slot remains empty \cite{validator-offline}. The timestamp of
+the following block aligns with the timestamp of the following slot, which is a
+multiple of 12 seconds. As a result, blocks are 24 seconds
+apart. If subsequent validators are also offline, the block times will be 36
+seconds apart, and so on.
 
 An examination of the blockchain data since the implementation of the Merge
 (starting at block number 15537393) reveals that 99.05\% of all blocks have been
@@ -138,14 +145,7 @@ Each validator calculates the block timestamp in the same way and verifies if
 the timestamp in the block matches the calculated timestamp. If there is a
 mismatch, the block is rejected \cite{process-execution-payload}. Since each
 slot, and consequently each block, has a predetermined timestamp, it is
-virtually impossible to tamper with, but it also becomes more predictable. In
-the event that the selected validator, responsible for proposing a new block,
-is offline, the slot remains empty \cite{validator-offline}. The timestamp of
-the following block aligns with the timestamp of the following slot, which is a
-multiple of \textit{SECONDS\_PER\_SLOT}. As a result, blocks are 24 seconds
-apart. If subsequent validators are also offline, the block times will be 36
-seconds apart, and so on.
-
+virtually impossible to tamper with, but it also becomes more predictable.
 
 \section{Block number in Ethereum}
 \subsection{Proof-of-Work Block Number}
