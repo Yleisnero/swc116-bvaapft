@@ -19,10 +19,10 @@ der Ablauf in Phasen unterteilt ist, zwischen denen zu bestimmten Zeiten umgesch
 
 \begin{solidity}
 modifier timedTransitions() {
-    if (stage == Stages.AcceptingBlindBids && now >= creationTime + 6 days) {
+    if (stage == Stages.AcceptingBlindBids && block.timestamp >= creationTime + 6 days) {
         nextStage();
     }
-    if (stage == Stages.RevealBids && now >= creationTime + 10 days) {
+    if (stage == Stages.RevealBids && block.timestamp >= creationTime + 10 days) {
         nextStage();
     }
     _;

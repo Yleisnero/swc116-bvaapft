@@ -13,18 +13,49 @@ Ethereum, significant changes have occurred in how the timestamp value has to
 be set and in the stability of the block time. This paper aims to discuss these
 changes.
 
-\section{Proof-of-Work}
-TODO: What is PoW
+\section{Overview of Ethereum's Consensus Mechanisms}
+TODO
 
-\subsection{Block Time}
+\section{Block Time in Ethereum}
 
+\subsection{Proof-of-Work block time}
 In PoW-based systems, a difficulty adjustment algorithm is employed to
 determine the block time. If the block time was too short (less than 10
 seconds), the difficulty level increased, and if the block time was too long
 (greater than 20 seconds), the difficulty level decreased \cite{eip-2}.
 
-\subsection{Block Timestamp}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{block_time_analysis/pow_block_time_pie_chart.png}
+  \caption{Block times under PoW in the year 2021.}
+  \label{fig:block_time_analysis_pow}
+\end{figure}
 
+\subsection{Proof-of-Stake block time}
+Since "The Merge" on September 15, 2022, Ethereum has transitioned to a
+Proof-of-Stake (PoS) consensus protocol. In PoS Ethereum, new blocks are
+proposed by validators, and then randomly selected validators must vote on the
+validity of these proposed blocks. To become a validator, a deposit of 32 ETH
+is required, stored in a deposit contract. Validators are incentivized to act
+honestly as they risk losing a portion or all of their staked ETH if they
+behave dishonestly.
+
+Proof-of-stake Ethereum introduced the concepts of slots and epochs. Each slot
+has a time frame of 12 seconds, and an epoch spans 32 slots
+\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. In each
+slot, one validator is randomly chosen to propose a new block to the network.
+Validators are required to adhere to the protocol's specifications when
+creating new blocks; otherwise, their blocks will be rejected.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{block_time_analysis/pos_block_time_bar_chart.png}
+  \caption{Block times since the merge.}
+  \label{fig:block_time_analysis}
+\end{figure}
+
+\section{Block timestamp in Ethereum}
+\subsection{Proof-of-Work Block Timestamp}
 As a result of the difficulty adjustment algorithm, the block time had the
 potential to vary from one block to another. Furthermore, the only restriction
 miners had to follow when setting the block timestamp value was outlined in the
@@ -44,54 +75,7 @@ as a security best practice. The
 rule suggests that the usage of the block timestamp is considered
 safe if the time-dependent event can tolerate a variation of up to 15 seconds. 
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=1\textwidth]{block_time_analysis/pow_block_time_pie_chart.png}
-  \caption{Block times under PoW in the year 2021.}
-  \label{fig:block_time_analysis_pow}
-\end{figure}
-
-\subsection{Block Number}
-The yellow paper of Ethereum states that each block has
-an integer value as a block number. The block number
-of a specific block must be exactly one unit higher than the block
-number of the previous block \cite{ethyellowpaper2023}.
-Smart contract developers attempted to utilize the block number to calculate
-the current time, operating under the assumption that the time interval between
-two blocks always remains constant at fourteen seconds. Theoretically, one could
-calculate time differences between blocks by multiplying the block numbers by fourteen 
-and subtracting them from each other.
-However, this approach proves impractical in reality due to the variable
-intervals between blocks, as explained earlier. Moreover, these block intervals
-can change unexpectedly, for instance, when the difficulty bomb was introduced
-or during a chain fork \cite{swc116}.
-As a result the block number should not be used as a proxy for time.
-An example for this misusage can be seen in the Listing \ref{lst:number_weakness}.
-There the block number is used to lock a function of a contract for a specific time.
-
-\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/bad-blocknumber.sol}
-
-\section{Proof-of-Stake}
-TODO: What is PoS
-
-\subsection{Block Time}
-
-Since "The Merge" on September 15, 2022, Ethereum has transitioned to a
-Proof-of-Stake (PoS) consensus protocol. In PoS Ethereum, new blocks are
-proposed by validators, and then randomly selected validators must vote on the
-validity of these proposed blocks. To become a validator, a deposit of 32 ETH
-is required, stored in a deposit contract. Validators are incentivized to act
-honestly as they risk losing a portion or all of their staked ETH if they
-behave dishonestly.
-
-Proof-of-stake Ethereum introduced the concepts of slots and epochs. Each slot
-has a time frame of 12 seconds, and an epoch spans 32 slots
-\cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. In each
-slot, one validator is randomly chosen to propose a new block to the network.
-Validators are required to adhere to the protocol's specifications when
-creating new blocks; otherwise, their blocks will be rejected.
-
-\subsection{Block Timestamp}
+\subsection{Proof-of-Stake Block Timestamp}
 
 The PoS Ethereum consensus specification provides instructions on how to
 calculate the timestamp at a specific slot using the
@@ -122,18 +106,32 @@ multiple of \textit{SECONDS\_PER\_SLOT}. As a result, blocks are 24 seconds
 apart. If subsequent validators are also offline, the block times will be 36
 seconds apart, and so on.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=1\textwidth]{block_time_analysis/pos_block_time_bar_chart.png}
-  \caption{Block times since the merge.}
-  \label{fig:block_time_analysis}
-\end{figure}
-
 Analyzing blockchain data (refer to Figure \ref{fig:block_time_analysis}) following the
 merge (block number $> 15537393$) shows that 99.05 \% of all blocks exhibit a
 block time of 12 seconds.
 
-\subsection{Block Number}
+\section{Block number in Ethereum}
+\subsection{Proof-of-Work Block Number}
+The yellow paper of Ethereum states that each block has
+an integer value as a block number. The block number
+of a specific block must be exactly one unit higher than the block
+number of the previous block \cite{ethyellowpaper2023}.
+Smart contract developers attempted to utilize the block number to calculate
+the current time, operating under the assumption that the time interval between
+two blocks always remains constant at fourteen seconds. Theoretically, one could
+calculate time differences between blocks by multiplying the block numbers by fourteen 
+and subtracting them from each other.
+However, this approach proves impractical in reality due to the variable
+intervals between blocks, as explained earlier. Moreover, these block intervals
+can change unexpectedly, for instance, when the difficulty bomb was introduced
+or during a chain fork \cite{swc116}.
+As a result the block number should not be used as a proxy for time.
+An example for this misusage can be seen in the Listing \ref{lst:number_weakness}.
+There the block number is used to lock a function of a contract for a specific time.
+
+\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/bad-blocknumber.sol}
+
+\subsection{Proof-of-Stake Block Number}
 In PoS, just like in PoW, the block number increases by one with each new block.
 In PoS, the block intervals are consistently set at 12 seconds.
 Consequently, it might appear that using the block number as a time proxy in PoS is a viable option. 
@@ -141,7 +139,8 @@ However, it's not advisable, because validators go offline from time to time.
 This causes the block time to increase and therefore leads to an inaccuracy of the calculation
 of time based on the block number.
 
-\section{Conclusion: Block Time under Proof-of-Work vs. Proof-of-Stake Ethereum}
+
+\section{Conclusion: Block Time under PoW vs. PoS Ethereum}
 In PoW-based Ethereum, block times were probabilistic and influenced by mining difficulty.
 As a result, using block values as a time proxy in PoW was not secure.
 However, since Ethereum's transition to PoS, this is no longer the case.
@@ -152,15 +151,3 @@ Therefore, using the block.timestamp value as a time proxy is now safe in PoS.
 Using the block.number as a proxy for time is still not advisable. Block times 
 can become a multiple of 12s and it is also not guaranteed that the block intervals will
 never change again in the future.
-
-\section{Best Practices (Dos and Donts)}
-
-\begin{center}
-  \begin{tabular}{ c c c }
-   \hline
-   & block.number & block.timestamp \\ [0.5ex] 
-  \hline
-   PoW & DONT & DONT \\ 
-   PoS & DONT & DO \\  
-  \end{tabular}
-  \end{center}
