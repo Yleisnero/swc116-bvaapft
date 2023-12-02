@@ -1,6 +1,6 @@
 paper=paper.pdf
 paper_tex=paper.tex
-deps = paper.tex block_time_analysis/*.png chapters/*.tex
+deps = paper.tex block_time_analysis/*.png chapters/*.tex seminar.bib
 
 all: $(paper)
 

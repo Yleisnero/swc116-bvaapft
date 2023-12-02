@@ -1,85 +1,55 @@
 \section{Block timestamp}
+\subsection{Proof-of-Work Block Timestamp}
+As discussed in \ref{diff_adjustment} under PoW the block time had the
+potential to vary from one block to another. Furthermore, the only restriction
+miners had to follow when setting the block timestamp value was outlined in the
+yellow paper, which regulated that the timestamp of the new block must be
+greater than the timestamp of the parent block \cite{ethyellowpaper2023}.
+Consequently, miners could gain an unfair advantage by manipulating the
+timestamp of their mined block \cite{swc116}.
 
-\subsection{Background} 
-The miners/validators are responsible for setting the timestamp their provided block.
-The yellow paper defines which rules this value has to follow. But depending on
-the specific consensus mechanism there are also consensus specification and
-software imposed restrictions for the timestamp value. 
+To prevent miners from setting the timestamp too far into the future, some of
+the most widely used Ethereum implementations, such as Geth (go-ethereum),
+implemented a rejection mechanism for blocks with timestamps exceeding 15
+seconds into the future \cite{go-ethereum-15-sek-limit}.
 
-\paragraph{Yellow Paper}
-Pre-merge the only restriction was the yellow paper, which set that the that
-the timestamp of the new block has to be greater than the timestamp of the
-parent block \cite{ethyellowpaper2023}.
+Hence, when the PoW consensus mechanism was in use, miners had the ability to
+manipulate the timestamp and adjust it by up to 15 seconds. This behavior led
+to the establishment of the "15-second Rule"
+\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
+as a security best practice. The
+rule suggests that the usage of the block timestamp is considered
+safe if the time-dependent event can tolerate a variation of up to 15 seconds.
 
-\paragraph{Proof of work}
-The currently most used Ethereum implementation Geth (go-ethereum) rejects
-blocks which timestamps are more than 15 seconds in the future
-\cite{go-ethereum-15-sek-limit}. Hence when the proof of work consensus
-mechanism was used it was possible for the miner to tamper with the timestamp
-and change it up to plus 15 seconds. This behaviour let to the "15-second
-Rule"\footnote{\url{https://consensys.github.io/smart-contract-best-practices/development-recommendations/solidity-specific/timestamp-dependence/}},
-which is a security best practice which recommends that the usage of the block
-timestamp is safe if the time dependent event can vary by up to 15 seconds.
+\subsection{Proof-of-Stake Block Timestamp}
 
-\paragraph{Proof of stake}
-Proof of stake Ethereum introduced slots, where each slot has a time frame of
-12 seconds \cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}.
-For each slot one random validator is selected to propose a block, which other
-random validatores have vote about its validity. The specification defines
-how to calculate the timestamp at a specific slot with the function
-\textit{compute\_timestmap\_at\_slot} \cite{compute-timestamp-at-slot}. The
-timestamp is calculated with 
+The PoS Ethereum consensus specification provides instructions on how to
+calculate the timestamp at a specific slot using the
+\textit{compute\_timestamp\_at\_slot} function \cite{compute-timestamp-at-slot}.
+This calculation is based on the following formula:
 
-$genesis\_time + slots\_since\_genesis *
-SECONDS\_PER\_SLOT$. 
+\begin{equation}
+GENESIS\_TIME + slots\_since\_genesis *
+SECONDS\_PER\_SLOT
+\end{equation}
 
-The function \textit{process\_execution\_payload} then
-checks if the blocks timestamp equals the calculated timestamp at that slot
-\cite{process-execution-payload}. Each slot and hence each block has
-a predetermined timestamp and is therefore impossible to tamper with but
-also much more easier to predict. If the selected validator is offline the slot
-remains empty \cite{validator-offline}. 
 
-\subsection{Consequences}
+As dicuessed in \ref{pos_block_time} the Ethereum mainnet configuration, uses
+value of 12 seconds for \textit{SECONDS\_PER\_SLOT}
+\cite{seconds-per-slot-mainnet} \cite{seconds-per-slot-mainnet-doc}.
+The mainnet beacon chain's value for \textit{GENESIS\_TIME} is $1606824023$, which
+corresponds to the timestamp when the original PoS beacon chain was launched on
+December 1, 2020.
 
-In Proof of work Ethereum, a miner could gain an unfair advantage by
-manipulating the timestamp of their mined block, setting it into the future.
-This allowed them to access resources ahead of other users or trigger events
-prematurely, disrupting the intended timing of these events.
+Each validator calculates the block timestamp in the same way and verifies if
+the timestamp in the block matches the calculated timestamp. If there is a
+mismatch, the block is rejected \cite{process-execution-payload}.
 
-In the new proof of stake consensus mechanism, each slot has a predetermined
-timestamp. If a miner attempts to manipulate the timestamp, the system will
-automatically reject the block.
+\subsection{Conclusion}
 
-Even though it is not possible for the verifier to tamper with the timestamp,
-it is still not reliable enough to triggering exact time depending task. In the
-worst case the action could be triggered 12 seconds late. The only way to
-prevent this is to either build a contract which does not depend on the exact
-time or to stop using the block timestamp.
+Under PoW miners were able to manipulate timestamps for up to 15 seconds, which
+could be used to gain an unfair advantage. Since PoS each slot, and
+consequently each block, has a predetermined timestamp, it is
+therefore impossible to tamper with, but it also becomes more predictable (very
+bad for randomness).
 
-\subsection{Weakness Example}
-
-\lstinputlisting[language=Solidity, caption={Weakness},linerange={4-12}, label={lst:timestamp_weakness}]{../dev/contracts/bad-blocktimestamp.sol}
-
-The Listing \ref{lst:timestamp_weakness} shows the contract \textit{Firework}. It
-is used to start the firework on New Years. But since it is using
-\textit{block.timestamp} is used it could be possible that the firework started
-at maximum 12 seconds late.
-
-% ist ja auch vulnerable weil man die spielzeit für alle verkürzen kann!
-%\begin{solidity}[caption=Non Vulnerable smart contract during proof-of-work Ethereum]
-%contract Game {
-%  uint expiry;
-%
-%  constructor(uint expiryTimestamp) public {
-%    expiry = expiryTimestamp;
-%  }
-%
-%  function play() public {
-%    // Safe to use because block timestamp can not be modified backwards
-%    require(block.timestamp < expiry);
-%  }
-%}
-%\end{solidity}
-
-    
