@@ -1,5 +1,5 @@
-\section{Block number in Ethereum}
-\subsection{Proof-of-Work Block Number}
+\section{Block number}
+\subsection{Proof-of-Work}
 The yellow paper of Ethereum states that each block has
 an integer value as a block number. The block number
 of a specific block must be exactly one unit higher than the block
@@ -19,9 +19,9 @@ As a result the block number should not be used as a proxy for time.
 
 %\lstinputlisting[language=Solidity, caption={Block Number Weakness in PoW},linerange={4-17}, label={lst:number_weakness}]{../dev/contracts/blocknumbertimelock.sol}
 
-\subsection{Proof-of-Stake Block Number}
+\subsection{Proof-of-Stake}
 In PoS, just like in PoW, the block number increases by one with each new
-block. In PoS, the block intervals are for 99.05\% at 12 seconds. Consequently,
+block. In PoS, the block intervals are for 99.05\% of times at 12 seconds. Consequently,
 it might appear that using the block number as a time proxy in PoS is a viable
 option. However, it's not advisable, because validators go offline from time to
 time. This causes the block time to increase and therefore leads to an
@@ -30,10 +30,10 @@ inaccuracy of the calculation of time based on the block number. \\
 A contract initially deployed under PoW would
 become impractical or malfunction in a PoS environment due to the inherent differences in the block times.
 
-\subsection{Conclusion}
+\subsection{Summary}
 The transition from PoW to PoS has significantly stabilized block times,
 particularly over short periods. However, it's important to note that using
-block.number as a proxy for time is still not advisable, as the fixed value
+the block number as a proxy for time is still not advisable, as the fixed value
 with 
 12 seconds per slot might change in the future. In earlier PoS designs, the
 slot time was set at 6 seconds \cite{block_time_6_to_12_sec}. There have

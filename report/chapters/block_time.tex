@@ -1,6 +1,6 @@
 \section{Block Time}
 
-\subsection{Proof-of-Work Block Time}
+\subsection{Proof-of-Work}
 \label{diff_adjustment}
 
 In Ethereum's PoW system, the block time — the average time
@@ -21,9 +21,10 @@ it adjusts difficulty levels based on observed block times \cite{eip-2}:
     mine new blocks, compensating for excessively lengthy block intervals.
 \end{itemize}
 
-The following pie chart provides a graphical overview of Ethereum's block time
-distribution under PoW for the year 2021, highlighting significant
-fluctuations, with an average block time of approximately 13.4 seconds.
+
+The follwing pie chart offers a visual representation of Ethereum's block time
+distribution under PoW throughout 2021. As anticipated, the block times
+exhibited considerable variability, averaging around 13.4 seconds
 
 
 \begin{figure}[H]
@@ -33,22 +34,22 @@ fluctuations, with an average block time of approximately 13.4 seconds.
   \label{fig:block_time_analysis_pow}
 \end{figure}
 
-\subsection{Proof-of-Stake Block Time}
+\subsection{Proof-of-Stake}
 \label{pos_block_time}
-Following "The Merge" on September 15, 2022, Ethereum has shifted to a
-Proof-of-Stake (PoS) consensus mechanism \cite{eth_history}. Under PoS, validators propose new
-blocks, with a selection process involving other validators who vote to confirm
-these blocks authenticity. A stake of 32 ETH is required to be locked in as a
-deposit for one to become a validator. This staking mechanism ensures validator
-honesty, as any malpractice could lead to the loss of their staked ETH.
+%Following 'The Merge' on September 15, 2022, Ethereum has shifted to a
+%PoS consensus mechanism \cite{eth_history}. Under PoS, validators propose new
+%blocks, with a selection process involving other validators who vote to confirm
+%these blocks authenticity. A stake of 32 ETH is required to be locked in as a
+%deposit for one to become a validator. This staking mechanism ensures validator
+%honesty, as any malpractice could lead to the loss of their staked ETH.
 
-The PoS system is organized around slots and epochs, with slots being 12-second
+The newly adopted PoS system is organized around slots and epochs, with slots
+being 12-second
 intervals and an epoch consisting of 32 such slots
 \cite{seconds-per-slot-mainnet}\cite{seconds-per-slot-mainnet-doc}. For each
-slot a validator is chosen by the protocol's algorithm to propose a new block,
-and failure to comply with the protocol's rules in block creation can result in
-their block being dismissed. In the event that the selected validator,
-responsible for proposing a new block, is offline, the slot remains empty
+slot a validator is chosen by the protocol's algorithm to propose a new block.
+In the event that the selected validator, responsible for proposing a new
+block, is offline, the slot remains empty
 \cite{validator-offline}.
 
 Each block within a slot corresponds to the slot's specific timestamp.
@@ -57,8 +58,8 @@ However, there are exceptions: if a slot remains unoccupied, the time interval
 for the subsequent block extends to 24 seconds, and this pattern continues
 accordingly (36,48,..).
 
-An examination of the blockchain data since the Merge (starting at block number
-15537393) reveals that 99.05\% of all blocks have been consistent with a block
+An examination of the blockchain data since the Merge \footnote{starting at block number
+15537393} reveals that 99.05\% of all blocks have been consistent with a block
 time of 12 seconds, as shown in Figure
 \ref{fig:block_time_analysis}.
 

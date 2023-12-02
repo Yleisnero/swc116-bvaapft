@@ -1,5 +1,35 @@
+\section{Example contracts}
+
+Displaimer: TODO
+asd
+
+- Firework.sol (timestamp based) - both bad \\
+- FastWithdrawChallenge.sol (timestamp based) - PoW bad, PoS ok (not considering other weaknesses) \\
+- BlockNumberTimeLock.sol (block number as a proxy for time) - both bad \\
+- BlockNumberLock.sol (block number only) - both good if the block count is more relevant than the exact time
+(the approximate duration until unlock is more precise under PoS then under PoW) \\
+
 \section{Use-cases}
 
+% Define a new column type 'Y' which is like 'X' but left-aligned
+% Define a new column type 'Y' which is like 'X' but left-aligned
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\begin{table}[h]
+\centering
+\small % Reduce the font size
+\begin{tabularx}{\textwidth}{|l|P{3cm}|c|c|Y|} % Fixed width for the second column
+\hline
+\textbf{Name} & \textbf{Description} & \textbf{PoW} & \textbf{PoS} & \textbf{Reason} \\ \hline
+Firework.sol & Contract to trigger New Years Firework at exactly 12am. & bad & bad & Triggering exact timings is not possible in either PoW nor PoS since TODO \\ \hline
+FastWithdrawChallenge.sol & First withdrawer after certain timestamp wins the money. & bad & good & Under PoW, timestamp could be influenced up to 15 seconds. \\ \hline
+BlockNumberTimeLock.sol & Contract locks ether for a certain time period using block number as proxy for time with a 14 second block time. & bad & bad & Under PoW and PoS, block time is not consistently 14 seconds. \\ \hline
+BlockNumberLock.sol & Contract locks ether for certain blocks without promising exact timings. & good & good & Good in both if communicated about block count and not specific time. \\ \hline
+\end{tabularx}
+\caption{Analysis of Various Smart Contracts}
+\label{tab:smart_contracts}
+\end{table}
 \subsection{Timelocks for ICO}
 https://blog.openzeppelin.com/bypassing-smart-contract-timelocks
 
@@ -41,9 +71,3 @@ modifier timedTransitions() {
 - It is safe to use block.timestamp in PoS, if the time-dependent event must only be higher than a certain timestamp (e.g. timelocks) \\
 - Never use block.timestamp in a comparison (do not do: e.g. block.timestamp == 1702446773), instead use $>$ or $>=$
 
-\section{Example contracts}
-- Firework.sol (timestamp based) - both bad \\
-- FastWithdrawChallenge.sol (timestamp based) - PoW bad, PoS ok (not considering other weaknesses) \\
-- BlockNumberTimeLock.sol (block number as a proxy for time) - both bad \\
-- BlockNumberLock.sol (block number only) - both good if the block count is more relevant than the exact time
-(the approximate duration until unlock is more precise under PoS then under PoW) \\

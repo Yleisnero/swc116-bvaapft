@@ -1,13 +1,30 @@
-\section{Conclusion: Using block values for time under PoW vs PoS}
+\section{Conclusion}
 
-In PoW-based Ethereum, block times were probabilistic and influenced by mining difficulty.
-As a result, using block values as a time proxy in PoW was not secure.
-However, since Ethereum's transition to PoS, this is no longer the case.
-PoS-based Ethereum has fixed block times of 12 seconds or multiples thereof.
-Our research has shown that block times can no longer be influenced from external sources.
-Therefore, using the block.timestamp value as a time proxy is now safe in PoS.
+Under PoW miners were able to manipulate block timestamps for a up 15 seconds.
+Consequently, utilizing the block timestamp for time-dependent events was
+secure only if the contract's time-dependent events could tolerate a variation
+of up to 15 seconds while still maintaining their integrity. Since PoS
+timestamp manipulation is impossible and therefore secure to use since miners
+can not gain an unfair advantage by modifing the timestamp.
 
-Using the block.number as a proxy for time is still not advisable. Block times 
-can become a multiple of 12s and it is also not guaranteed that the block intervals will
-never change again in the future.
+In PoW Ethereum, block times were probabilistic since they are influenced by
+the mining difficulty. In contrast, block times under PoS are significantly more
+consistent, mostly 12 seconds, compared to those in PoW. Therefore, in PoS,
+using block numbers as a measure of time is generally more accurate than in
+PoW, especially for shorter durations (possibly less than a year). However,
+it's important to note that the fixed block time (slot time) in PoS is not
+guaranteed to remain unchanged indefinitely. Therefore, using block numbers as
+a time proxy is generally not advisable.
+
+
+%In PoW-based Ethereum, block times were probabilistic and influenced by mining difficulty.
+%As a result, using block values as a time proxy in PoW was not secure.
+%However, since Ethereum's transition to PoS, this is no longer the case.
+%PoS-based Ethereum has fixed block times of 12 seconds or multiples thereof.
+%Our research has shown that block times can no longer be influenced from external sources.
+%Therefore, using the block.timestamp value as a time proxy is now safe in PoS.
+%
+%Using the block.number as a proxy for time is still not advisable. Block times 
+%can become a multiple of 12s and it is also not guaranteed that the block intervals will
+%never change again in the future.
 
