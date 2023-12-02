@@ -11,21 +11,21 @@ asd
 
 \section{Use-cases}
 
-% Define a new column type 'Y' which is like 'X' but left-aligned
-% Define a new column type 'Y' which is like 'X' but left-aligned
-\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \begin{table}[h]
 \centering
 \small % Reduce the font size
-\begin{tabularx}{\textwidth}{|l|P{3cm}|c|c|Y|} % Fixed width for the second column
+\begin{tabularx}{\textwidth}{L{3.5cm}L{3.5cm}C{0.5cm}C{0.5cm}X} % Fixed width for the second column
 \hline
-\textbf{Name} & \textbf{Description} & \textbf{PoW} & \textbf{PoS} & \textbf{Reason} \\ \hline
-Firework.sol & Contract to trigger New Years Firework at exactly 12am. & bad & bad & Triggering exact timings is not possible in either PoW nor PoS since TODO \\ \hline
-FastWithdrawChallenge.sol & First withdrawer after certain timestamp wins the money. & bad & good & Under PoW, timestamp could be influenced up to 15 seconds. \\ \hline
-BlockNumberTimeLock.sol & Contract locks ether for a certain time period using block number as proxy for time with a 14 second block time. & bad & bad & Under PoW and PoS, block time is not consistently 14 seconds. \\ \hline
-BlockNumberLock.sol & Contract locks ether for certain blocks without promising exact timings. & good & good & Good in both if communicated about block count and not specific time. \\ \hline
+\textbf{Contract Name}& \textbf{Contract Description}                                                                                                                           & \textbf{PoW} & \textbf{PoS} & \textbf{Reason}                                                                                                                                                                                \\ \hline
+Firework              & A contract designed to activate New Year's fireworks precisely at 12 AM.                                                                & bad          & bad          & Precise timing cannot be achieved in either PoW or PoS systems.                                                                                                                                \\ \hline
+FastWithdrawChallenge & The first individual to withdraw after a specified timestamp wins the money.                                                            & bad          & good         & In a PoW system, the block timestamp can be influenced by up to 15 seconds by a malicious miner.                                                                                               \\ \hline
+BlockNumberTimeLock   & A contract that locks Ethereum for a set period, utilizing block numbers as a proxy for time, based on an assumed 14-second block time. & bad          & bad          & In both PoW and PoS, the block time does not consistently maintain a 14-second duration.                                                                                                       \\ \hline
+BlockNumberLock       & A contract that locks Ethereum for a specified number of blocks without guaranteeing exact timing.                                      & good         & good         & In both PoS and PoW it is safe to use when it is clearly communicated to the user that a lock will be maintained for a specified number of blocks, without guaranteeing a specific time period
+
+
 \end{tabularx}
 \caption{Analysis of Various Smart Contracts}
 \label{tab:smart_contracts}
