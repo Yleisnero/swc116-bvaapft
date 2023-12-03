@@ -1,3 +1,20 @@
+\section{Best practices}
+\subsection{Best practices under PoS}
+\begin{itemize}
+  \item Do not use block.number as a proxy for time.
+  \item Do not use block.timestamp to trigger exact timings.
+  \item Do not use block.timestamp in a comparison, instead use $>$ or $>=$.
+  \item It is secure to use block.timestamp for time-dependent events, if it is acceptable for these events to occur later (until the next block) than anticipated. \\
+\end{itemize}
+
+\subsection{Best practices under PoW}
+\begin{itemize}
+  \item Do not use block.number as a proxy for time.
+  \item Do not use block.timestamp to trigger exact timings.
+  \item Do not use block.timestamp in a comparison, instead use $>$ or $>=$.
+  \item It is secure to use block.timestamp for time-dependent events, if it is acceptable for these events to take place up to 15 seconds earlier than expected or later (until the next block). \\
+\end{itemize}
+
 \newpage
 \section{Use-cases}
 
@@ -27,56 +44,7 @@ for the contracts code.
   \caption{Analysis of Various Smart Contracts}
   \label{tab:smart_contracts}
 \end{table}
-%
-%\subsection{Timelocks for ICO}
-%https://blog.openzeppelin.com/bypassing-smart-contract-timelocks
-%
-%\subsection{Timelocks}
-%A timelock is a smart contract that serves as a mechanism to delay function calls form another contract for
-%a predefined amount of time. Timelocks find their primary application in governance systems,
-%where they play a crucial role in implementing delayed administrative actions.
-%Their presence often signifies the credibility of a project and underscores the commitment of its owners
-%to its long-term success. \cite{timelock2021}.
-%
-%Openzeppelin provides such a timelock in their library (@openzeppelin/contracts/governance/TimelockController.sol).
-%A part of this timelock code can be seen in Listing \ref{lst:timelock} \cite{timelock_code}.
-%
-%\lstinputlisting[language=Solidity, caption={Openzeppelin Timelock}, label={lst:timelock}]{../dev/contracts/timelock.sol}
-%
-%\subsection{State Machine}
-%Contracts often act as a state machine. It's common to have multi-stage
-%processes where certain actions are allowed only during specific phases.
-%Timestamps can be used to enforce time-based conditions within a contract \cite{soliditydocs_statemaschine}. \\
-%The following example shows a contract that implements the transition of stages (states) based on timestamps \cite{stagedcontract_code}.
-%
-%\begin{solidity}
-%modifier timedTransitions() {
-%    if (stage == Stages.AcceptingBlindBids && block.timestamp >= creationTime + 6 days) {
-%        nextStage();
-%    }
-%    if (stage == Stages.RevealBids && block.timestamp >= creationTime + 10 days) {
-%        nextStage();
-%    }
-%    _;
-%}
-%\end{solidity}
 
-\newpage
-\section{Best practices}
-\subsection{Best practices under PoS}
-\begin{itemize}
-  \item Do not use block.number as a proxy for time.
-  \item Do not use block.timestamp to trigger exact timings.
-  \item Do not use block.timestamp in a comparison, instead use $>$ or $>=$.
-  \item It is secure to use block.timestamp for time-dependent events, if it is acceptable for these events to occur later (12s, 24s, ...) than anticipated. \\
-\end{itemize}
-
-\subsection{Best practices under PoW}
-\begin{itemize}
-  \item Do not use block.number as a proxy for time.
-  \item Do not use block.timestamp to trigger exact timings.
-  \item It is secure to use block.timestamp for time-dependent events, if it is acceptable for these events to take place up to 15 seconds earlier than expected or later (until the next block). \\
-\end{itemize}
 
 \newpage
 \section{Appendix}
