@@ -2,7 +2,7 @@
 \section{Use-cases}
 
 The table below presents a range of potential use-cases for contracts that
-utilize block timestamps and block numbers. It also provides a safety rating
+utilize block timestamps and block numbers. It also provides a usage recommendation
 for each use-case under both PoS and PoW frameworks. These contracts serve as
 examples and focus solely on issues related to block values, excluding any
 other types of vulnerabilities. Refer to Appendix (see Section \ref{appendix})
@@ -20,7 +20,8 @@ for the contracts code.
 Firework              & A contract designed to activate New Year's fireworks precisely at 12 AM.                                                                & bad          & bad          & Precise timing cannot be achieved in either PoW or PoS systems.                                                                                                                                \\ \hline
 FastWithdrawChallenge & The first individual to withdraw after a specified timestamp wins the money.                                                            & bad          & good         & In a PoW system, the block timestamp can be influenced by up to 15 seconds by a malicious miner.                                                                                               \\ \hline
 BlockNumberTimeLock   & A contract that locks Ethereum for a set period, utilizing block numbers as a proxy for time, based on an assumed 14-second block time. & bad          & bad          & In both PoW and PoS, the block time does not consistently maintain a 14-second duration.                                                                                                       \\ \hline
-BlockNumberLock       & A contract that locks Ethereum for a specified number of blocks without guaranteeing exact timing.                                      & good         & good         & In both PoS and PoW it is safe to use when it is clearly communicated to the user that a lock will be maintained for a specified number of blocks, without guaranteeing a specific time period
+BlockNumberLock       & A contract that locks Ethereum for a specified number of blocks without guaranteeing exact timing.                                      & good         & good         & In both PoS and PoW it is safe to use when it is clearly communicated to the user that a lock will be maintained for a specified number of blocks, without guaranteeing a specific time period \\ \hline
+Lottery               & Lottery contract, players are allowed to enter the lottery up until a certain timestamp.                                                               & bad         & good         & In certain cases a malicous miner under PoW could be able to end the lottery up to 15 seconds earlier.
 
 
 \end{tabularx}
@@ -81,6 +82,7 @@ BlockNumberLock       & A contract that locks Ethereum for a specified number of
 \lstinputlisting[language=Solidity, caption={FastWithdrawChallenge Contract}, label={lst:FastWithdrawChallenge}]{../dev/contracts/FastWithdrawChallenge.sol}
 \lstinputlisting[language=Solidity, caption={BlockNumberTimeLock Contract}, label={lst:BlockNumberTimeLock}]{../dev/contracts/blockNumberTimeLock.sol}
 \lstinputlisting[language=Solidity, caption={BlockNumberLock Contract}, label={lst:BlockNumberLock}]{../dev/contracts/blocknumberlock.sol}
+\lstinputlisting[language=Solidity, caption={Lottery Contract}, label={lst:Lottery}]{../dev/contracts/lottery.sol}
 
 
 
