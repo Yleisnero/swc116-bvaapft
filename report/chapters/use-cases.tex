@@ -5,7 +5,8 @@ The table below presents a range of potential use-cases for contracts that
 utilize block timestamps and block numbers. It also provides a safety rating
 for each use-case under both PoS and PoW frameworks. These contracts serve as
 examples and focus solely on issues related to block values, excluding any
-other types of vulnerabilities.
+other types of vulnerabilities. Refer to Appendix (see Section \ref{appendix})
+for the contracts code.
 
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
@@ -72,5 +73,14 @@ BlockNumberLock       & A contract that locks Ethereum for a specified number of
   \item It is safe to use block.timestamp in PoS, if the time-dependent event must only be higher than a certain timestamp (e.g. timelocks) \\
   \item Never use block.timestamp in a comparison (do not do: e.g. block.timestamp == 1702446773), instead use $>$ or $>=$
 \end{itemize}
+
+\section{Appendix}
+\label{appendix}
+
+\lstinputlisting[language=Solidity, caption={Firework Contract}, label={lst:Firework}]{../dev/contracts/firework.sol}
+\lstinputlisting[language=Solidity, caption={FastWithdrawChallenge Contract}, label={lst:FastWithdrawChallenge}]{../dev/contracts/FastWithdrawChallenge.sol}
+\lstinputlisting[language=Solidity, caption={BlockNumberTimeLock Contract}, label={lst:BlockNumberTimeLock}]{../dev/contracts/blockNumberTimeLock.sol}
+\lstinputlisting[language=Solidity, caption={BlockNumberLock Contract}, label={lst:BlockNumberLock}]{../dev/contracts/blocknumberlock.sol}
+
 
 

@@ -1,8 +1,3 @@
-/*
-  Source: https://dasp.co/#item-8
-  PoW: block.timestamp can be tampered with
-  PoS: no issue anymore
- */
 pragma solidity ^0.8.21;
 
 contract FastWithdrawChallenge {
