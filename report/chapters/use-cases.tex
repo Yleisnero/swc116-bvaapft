@@ -3,7 +3,8 @@
 \begin{itemize}
   \item Do not use block.number as a proxy for time.
   \item Do not use block.timestamp to trigger exact timings.
-  \item Do not use block.timestamp in a comparison, instead use $>$ or $>=$.
+  \item When using block.timestamp in a comparison, do not use $=$, instead use $>$ or $>=$.
+%  \item Do not use block.timestamp in a comparison, instead use $>$ or $>=$.
   \item It is secure to use block.timestamp for time-dependent events, if it is acceptable for these events to occur later (until the next block) than anticipated. \\
 \end{itemize}
 
@@ -39,7 +40,7 @@ for the contracts code.
     BlockNumberTimeLock    & A contract that locks Ethereum for a set period, utilizing block numbers as a proxy for time, based on an assumed 14-second block time. & bad          & bad          & In both PoW and PoS, the block time does not consistently maintain a 14-second duration.                                                                                                       \\ \hline
     BlockNumberLock        & A contract that locks Ethereum for a specified number of blocks without guaranteeing exact timing.                                      & good         & good         & In both PoS and PoW it is safe to use when it is clearly communicated to the user that a lock will be maintained for a specified number of blocks, without guaranteeing a specific time period \\ \hline
     Lottery                & Lottery contract, players are allowed to enter the lottery up until a certain timestamp.                                                & bad          & good         & In certain cases a malicious miner under PoW could be able to end the lottery up to 15 seconds earlier.                                                                                       \\ \hline                  
-    StateMachine           & Multi-stage contract where certain actions are allowed only during specific phases.                                                     & bad          & good         & In PoW a malicious miner could trigger a stage up to 15 seconds earlier.                                                                                                                     \\ \hline
+    StateMachine           & Multi-stage contract where the phase change depends on block.timestamp are allowed.                                                     & bad          & good         & In PoW a malicious miner could trigger a stage up to 15 seconds earlier.                                                                                                                     \\ \hline
   \end{tabularx}
   \caption{Analysis of Various Smart Contracts}
   \label{tab:smart_contracts}
